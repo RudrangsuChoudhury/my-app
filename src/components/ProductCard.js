@@ -110,7 +110,7 @@ const ProductCard = ({gridSize}) => {
         >
           <Center>
             <animated.img
-              src="images/sony-headphone-featured.webp"
+              src={productimage}
               style={{
                 ...imageScale,
                 width: width,

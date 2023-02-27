@@ -41,6 +41,7 @@ import Meta from '../components/Meta';
 import ReactStars from 'react-rating-stars-component';
 import FeaturedProductCard from '../components/FeaturedProductCard';
 import ReactImageZoom from 'react-image-zoom';
+import RandomImage from '../images/Random_product_1.jpg';
 const SingleProduct = () => {
     const { colorMode } = useColorMode();
      const [hasPurchased, setHasPurchased] = useState(false);
@@ -51,8 +52,7 @@ const props = {
   width: 400,
   height: 500,
   zoomWidth: 500,
-  img: '/images/Random_product_1.jpg',
-
+  img:  RandomImage ,
 };
   return (
     <>
@@ -91,7 +91,7 @@ const props = {
                 border="1px solid rgba(0,0,0,0.25)"
                 bg="white"
               >
-                <Image src="/images/Random_product_1.jpg" />
+                <Image src={RandomImage} />
               </Box>
               <Box
                 p="10px"
@@ -99,7 +99,7 @@ const props = {
                 border="1px solid rgba(0,0,0,0.25)"
                 bg="white"
               >
-                <Image src="/images/Random_product_1.jpg" />
+                <Image src={RandomImage} />
               </Box>
               <Box
                 p="10px"
@@ -107,7 +107,7 @@ const props = {
                 bg="white"
                 boxSize="100%"
               >
-                <Image src="/images/Random_product_1.jpg" />
+                <Image src={RandomImage} />
               </Box>
               <Box
                 p="10px"
@@ -115,7 +115,7 @@ const props = {
                 bg="white"
                 boxSize="100%"
               >
-                <Image src="/images/Random_product_1.jpg" />
+                <Image src={RandomImage} />
               </Box>
             </Grid>
           </Flex>

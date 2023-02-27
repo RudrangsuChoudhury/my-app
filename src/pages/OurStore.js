@@ -7,6 +7,8 @@ import { ChevronRightIcon } from '@chakra-ui/icons';
 import { TextColumnOneWide as FilledTextColumnOneWide } from '@styled-icons/fluentui-system-filled';
 import { TextColumnOneWide as RegularTextColumnOneWide } from '@styled-icons/fluentui-system-regular';
 import Color from '../components/Color';
+import Random1 from '../images/Random_product_1.jpg';
+import Random2 from '../images/Random_product_2.jpg';
 
 
 
@@ -499,7 +501,7 @@ const OurStore = () => {
                 direction={['column', 'row']}
               >
                 <Image
-                  src="images/Random_product_1.jpg"
+                  src={Random1}
                   width={[100, 150]}
                   height={[100, 200]}
                 />
@@ -532,7 +534,7 @@ const OurStore = () => {
                 direction={['column', 'row']}
               >
                 <Image
-                  src="images/Random_product_2.jpg"
+                  src={Random2}
                   width={[100, 150]}
                   height={[100, 200]}
                 />

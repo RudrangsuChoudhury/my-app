@@ -13,6 +13,7 @@ import {
 import { Link } from 'react-router-dom';
 import { ChevronRightIcon } from '@chakra-ui/icons';
 import { RxCross1 } from 'react-icons/rx';
+import WishlistImage from '../images/compare_products_image_1.jpg';
 
 const Wishlist = () => {
     const { colorMode } = useColorMode();
@@ -58,7 +59,7 @@ const Wishlist = () => {
             justify="center"
             align="center"
           >
-            <Image src="images/compare_products_image_1.jpg" boxSize="80%" />
+            <Image src={WishlistImage} boxSize="80%" />
             <Box
               as={RxCross1}
               w="20px"
@@ -101,7 +102,7 @@ const Wishlist = () => {
             justify="center"
             align="center"
           >
-            <Image src="images/compare_products_image_1.jpg" boxSize="80%" />
+            <Image src={WishlistImage} boxSize="80%" />
             <Box
               as={RxCross1}
               w="20px"
@@ -144,7 +145,7 @@ const Wishlist = () => {
             justify="center"
             align="center"
           >
-            <Image src="images/compare_products_image_1.jpg" boxSize="80%" />
+            <Image src={WishlistImage} boxSize="80%" />
             <Box
               as={RxCross1}
               w="20px"

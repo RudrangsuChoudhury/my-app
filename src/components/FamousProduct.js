@@ -18,7 +18,7 @@ const FamousProduct = (props) => {
     >
       <Link to=''>
         <Image
-          src={'images/' + props.src}
+          src={props.src}
           width={props.width}
 
           mt={props.imageMt}

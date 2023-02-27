@@ -19,6 +19,22 @@ import mac from "../images/13-inch-macbook-pro-m2-mock-feature-2.jpg"
 import catbanner1 from  '../images/catbanner-02.jpg'
 import catbanner2 from  '../images/catbanner-03.jpg'
 import catbanner3 from  '../images/catbanner-04.jpg'
+import brand1 from '../images/brand-01.png';
+import brand2 from '../images/brand-02.png';
+import brand3 from '../images/brand-03.png';
+import brand4 from '../images/brand-04.png';
+import brand5 from '../images/brand-05.png';
+import brand6 from '../images/brand-06.png';
+import brand7 from '../images/brand-07.png';
+import brand8 from '../images/brand-08.png';
+import Famous1 from '../images/smartwatch_famous.jpg';
+import Famous2 from '../images/smartwatch_famous_dark.jpg';
+import Famous3 from '../images/FamousLaptop.jpg';
+import Famous4 from '../images/smartphone_famous.jpg';
+import Famous5 from '../images/homepad_famous.jpg';
+
+
+
 
 const Home = () => {
   const { colorMode, toggleColorMode } = useColorMode();
@@ -405,7 +421,7 @@ const Home = () => {
                 borderLeft={borderLeft}
               >
                 <Image
-                  src={`../images/${category.src}`}
+                  src={category.src}
                   w={150}
                   h={150}
                   borderRadius={20}
@@ -465,14 +481,20 @@ const Home = () => {
         pt={20}
         justify="center"
       >
-        <Flex width={["400px","1200px"]} align="center" justify="center" columnGap={20}
-        direction={['row','row']} wrap={['wrap','nowrap']}
-        rowGap={['10px',0]}>
+        <Flex
+          width={['400px', '1200px']}
+          align="center"
+          justify="center"
+          columnGap={20}
+          direction={['row', 'row']}
+          wrap={['wrap', 'nowrap']}
+          rowGap={['10px', 0]}
+        >
           <FamousProduct
             src={
               colorMode === 'light'
-                ? 'smartwatch_famous.jpg'
-                : 'smartwatch_famous_dark.jpg'
+                ? Famous1
+                : Famous2
             }
             width={150}
             justify={'center'}
@@ -481,12 +503,12 @@ const Home = () => {
             name={'Smart Watch Series 7'}
             price={'399'}
             top={'5%'}
-            left={['30%','15%']}
+            left={['30%', '15%']}
             rowGap={2}
             fontSize="15px"
           />
           <FamousProduct
-            src={'FamousLaptop.jpg'}
+            src={Famous3}
             width={180}
             justify={'center'}
             align={'end'}
@@ -494,28 +516,28 @@ const Home = () => {
             name={'ASUS ROG Strix G15 (2022)'}
             price={'1099'}
             top={'0px'}
-            left={['20%','10%']}
-            mt={['30px','10px']}
+            left={['20%', '10%']}
+            mt={['30px', '10px']}
             rowGap={2}
             fontSize="15px"
           />
           <FamousProduct
-            src={'smartphone_famous.jpg'}
+            src={Famous4}
             width={100}
             justify={'center'}
             align={'center'}
             title={'Super Retina XDR display with ProMotion'}
             name={'iPhone 13 Pro'}
             price={'899'}
-            top={['0px','10px']}
-            left={['25%','5%']}
-            mt={['10px',0]}
+            top={['0px', '10px']}
+            left={['25%', '5%']}
+            mt={['10px', 0]}
             rowGap={1}
             fontSize="10px"
             imageMt={10}
           />
           <FamousProduct
-            src={'homepad_famous.jpg'}
+            src={Famous5}
             width={120}
             justify={'center'}
             align={'end'}
@@ -523,9 +545,9 @@ const Home = () => {
             name={'HomePod mini'}
             price={'99'}
             top={'0px'}
-            left={['25%','10%']}
-            mt={['30px','10px']}
-            rowGap={[2,0]}
+            left={['25%', '10%']}
+            mt={['30px', '10px']}
+            rowGap={[2, 0]}
             fontSize="12px"
             imageMb={10}
           />
@@ -557,13 +579,15 @@ const Home = () => {
           >
             Special Products
           </Text>
-          <Flex align="center" justify="space-between"
-          direction={['column','row']}
-          rowGap={['10px','0px']}>
+          <Flex
+            align="center"
+            justify="space-between"
+            direction={['column', 'row']}
+            rowGap={['10px', '0px']}
+          >
             <SpecialProduct />
             <SpecialProduct />
             <SpecialProduct />
-
           </Flex>
         </Box>
       </Flex>
@@ -606,18 +630,18 @@ const Home = () => {
           bgColor={colorMode === 'light' ? 'white' : '#0b315b'}
           boxShadow="0px 0px 9px -4px #484E51"
           color="black"
-          w={['400px','1220px']}
+          w={['400px', '1220px']}
         >
           <Marquee gradient={colorMode === 'light' ? true : false}>
-            <Box display={'flex'} columnGap={[10,20]}>
-              <Image src="images/brand-01.png" boxSize={['40px','150px']} />
-              <Image src="images/brand-02.png" boxSize={['40px','150px']} />
-              <Image src="images/brand-03.png" boxSize={['40px','150px']} />
-              <Image src="images/brand-04.png" boxSize={['40px','150px']} />
-              <Image src="images/brand-05.png" boxSize={['40px','150px']} />
-              <Image src="images/brand-06.png" boxSize={['40px','150px']} />
-              <Image src="images/brand-07.png" boxSize={['40px','150px']} />
-              <Image src="images/brand-08.png" boxSize={['40px','150px']} />
+            <Box display={'flex'} columnGap={[10, 20]}>
+              <Image src={brand1} boxSize={['40px', '150px']} />
+              <Image src={brand2} boxSize={['40px', '150px']} />
+              <Image src={brand3} boxSize={['40px', '150px']} />
+              <Image src={brand4} boxSize={['40px', '150px']} />
+              <Image src={brand5} boxSize={['40px', '150px']} />
+              <Image src={brand6} boxSize={['40px', '150px']} />
+              <Image src={brand7} boxSize={['40px', '150px']} />
+              <Image src={brand8} boxSize={['40px', '150px']} />
             </Box>
           </Marquee>
         </Box>
@@ -639,21 +663,19 @@ const Home = () => {
           Our Latest Blogs
         </Text>
         <Box
-          display={["grid","flex"]}
+          display={['grid', 'flex']}
           gridTemplateColumns={'1fr 1fr'}
           alignItems="center"
           justifyContent="center"
           bgColor={colorMode === 'light' ? '#cbd5e0' : '#9661ae'}
-          columnGap={["0px","55px"]}
-          p={['0px 0px 0px 50px' ,"30px"]}
-          rowGap={["20px","0px"]}
-          flexDirection={['column','row']}
-          width={["400px",'auto']}
-          gridColumnGap={['20px','auto']}
-          mr={['50px','0px']}
-          mb={['50px','0px']}
-
-
+          columnGap={['0px', '55px']}
+          p={['0px 0px 0px 50px', '30px']}
+          rowGap={['20px', '0px']}
+          flexDirection={['column', 'row']}
+          width={['400px', 'auto']}
+          gridColumnGap={['20px', 'auto']}
+          mr={['50px', '0px']}
+          mb={['50px', '0px']}
         >
           <BlogCard />
           <BlogCard />
