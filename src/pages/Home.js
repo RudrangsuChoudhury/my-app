@@ -14,7 +14,7 @@ import ProductCard from '../components/ProductCard';
 import background from '../images/background1.png';
 import darkbackground from '../images/darkBackground.png';
 import Shop from '../images/background-shop.jpg';
-import PS5 from '../images/PS5.jpg';
+import PS5 from '../images/ps5.jpg';
 import mac from "../images/13-inch-macbook-pro-m2-mock-feature-2.jpg"
 import catbanner1 from  '../images/catbanner-02.jpg'
 import catbanner2 from  '../images/catbanner-03.jpg'
