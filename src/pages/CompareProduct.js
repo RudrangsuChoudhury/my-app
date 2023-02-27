@@ -15,6 +15,7 @@ import { ChevronRightIcon } from '@chakra-ui/icons';
 import { Link } from 'react-router-dom';
 import { RxCross1 } from 'react-icons/rx';
 import Color from '../components/Color';
+import compareimage from '../images/compare_products_image_1.jpg';
 const CompareProduct = () => {
     const { colorMode } = useColorMode();
   return (
@@ -60,7 +61,7 @@ const CompareProduct = () => {
           align="start"
         >
           <Image
-            src="images/compare_products_image_1.jpg"
+            src={compareimage}
             boxSize="70%"
             alignSelf="center"
           />

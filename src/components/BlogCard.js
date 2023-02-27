@@ -1,6 +1,7 @@
 import { Box,Button,Image, Text,useColorMode } from '@chakra-ui/react'
 import React from 'react'
 import { Link } from 'react-router-dom';
+import blogimage from '../images/blogs1.png';
 
 const BlogCard = () => {
   const { colorMode } = useColorMode();
@@ -15,7 +16,7 @@ const BlogCard = () => {
       justifyContent="flex-start"
     >
       <Image
-        src="images/blogs1.png"
+        src={blogimage}
         w={[200, 265]}
         h={[200, 265]}
         borderTopLeftRadius="10px"

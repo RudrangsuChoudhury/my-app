@@ -11,6 +11,7 @@ import {
 import ReactStars from 'react-rating-stars-component';
 import React from 'react';
 import { Link } from 'react-router-dom';
+import specialproductimage from '../images/samsung-galaxy-s10e.jpeg';
 const SpecialProduct = () => {
   const { colorMode } = useColorMode();
   return (
@@ -22,7 +23,7 @@ const SpecialProduct = () => {
       h={400}
       justify="space-between"
     >
-      <Image src="images/samsung-galaxy-s10e.jpeg" w={130} />
+      <Image src={specialproductimage} w={130} />
       <Flex
         align="center"
         justify="flex-start"

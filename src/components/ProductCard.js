@@ -8,6 +8,7 @@ import { MdAddShoppingCart, MdOutlineRemoveRedEye } from 'react-icons/md';
 import { IoGitCompareSharp } from 'react-icons/io5';
 import { BsHeart } from 'react-icons/bs';
 import { useSpring, animated } from 'react-spring';
+import productimage  from '../images/sony-headphone-featured.webp';
 
 const AnimatedBox = animated(Box);
 const ProductCard = ({gridSize}) => {

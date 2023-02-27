@@ -5,6 +5,9 @@ import { Link,useLocation } from 'react-router-dom';
 import { MdAddShoppingCart, MdOutlineRemoveRedEye } from 'react-icons/md';
 import { IoGitCompareSharp } from 'react-icons/io5';
 import { BsHeart } from 'react-icons/bs';
+import featuredimage from '../images/sony-headphone-featured.webp';
+import featuredimage1 from '../images/sony-headphone-featured1.jpg';
+
 const FeaturedProductCard = () => {
   const{colorMode} = useColorMode()
   let location = useLocation();
@@ -25,8 +28,9 @@ const FeaturedProductCard = () => {
           to={`${
             location.pathname === '/'
               ? '/product/:id'
-              : location.pathname == '/product/:id'?
-              "/product/:id":":id"
+              : location.pathname == '/product/:id'
+              ? '/product/:id'
+              : ':id'
           }`}
         >
           <Box
@@ -42,12 +46,9 @@ const FeaturedProductCard = () => {
           alignItems="center"
           justifyContent="center"
         >
+          <Image src={featuredimage} className="featuredimage"></Image>
           <Image
-            src="/images/sony-headphone-featured.webp"
-            className="featuredimage"
-          ></Image>
-          <Image
-            src="/images/sony-headphone-featured1.jpg"
+            src={featuredimage1}
             className="featuredimage"
           ></Image>
         </Box>

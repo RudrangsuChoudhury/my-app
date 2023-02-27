@@ -43,6 +43,7 @@ import { CgLogIn, CgMenuGridR } from 'react-icons/cg';
 import { TiShoppingCart } from 'react-icons/ti';
 import { MdOutlineEmail, MdEmail } from 'react-icons/md';
 import {RiDeleteBin6Fill} from 'react-icons/ri';
+import  logo  from '../images/e-commerce-4b0c17.jpg';
 const headerVariants = {
   hidden: {
     y: '-100vh',
@@ -110,7 +111,7 @@ const {
             <Image
               borderRadius="full"
               boxSize={['70px', '70px', '100px']}
-              src="/images/e-commerce-4b0c17.jpg"
+              src={logo}
               alt="Shopping"
             />
           </motion.div>

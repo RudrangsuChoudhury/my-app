@@ -11,6 +11,15 @@ import FeaturedProductCard from '../components/FeaturedProductCard';
 import SpecialProduct from '../components/SpecialProduct';
 import FamousProduct from '../components/FamousProduct';
 import ProductCard from '../components/ProductCard';
+import background from '../images/background1.png';
+import darkbackground from '../images/darkbackground.png';
+import Shop from '../images/background-shop.jpg';
+import PS5 from '../images/PS5.jpg';
+import mac from "../images/13-inch-macbook-pro-m2-mock-feature-2.jpg"
+import catbanner1 from  '../images/catbanner-02.jpg'
+import catbanner2 from  '../images/catbanner-03.jpg'
+import catbanner3 from  '../images/catbanner-04.jpg'
+
 const Home = () => {
   const { colorMode, toggleColorMode } = useColorMode();
   return (
@@ -18,65 +27,20 @@ const Home = () => {
       <Box
         background={
           colorMode === 'light'
-            ? 'url(images/background1.png)'
-            : 'url(images/darkbackground.png)'
+            ? `url(${background})`
+            : `url(${darkbackground})`
         }
         backgroundSize="100% 500px"
         backgroundPosition="center"
         backgroundRepeat="no-repeat"
         h={500}
       />
-      {/* <Box
-        display="flex"
-        position="relative"
-        p={20}
-        background="url(images/background-shop.jpg)"
-        backgroundSize="300px 300px"
-        backgroundPosition="center"
-        border="2rem solid #394544"
 
-      >
-        <Banner
-          src={'images/PS5.jpg'}
-          h={550}
-          w={500}
-          p="17px 30px 17px 30px"
-          textbgGradient={'linear(to-r, #0A3499,#164E05)'}
-          top={'76%'}
-          left={'23%'}
-          buttonbgGradient={'linear(to-r, #28A2AA, #0C1D70)'}
-          buttontop={'82%'}
-          buttonleft={'19%'}
-          fontSize={'2xl'}
-          subheadfontsize={'20px'}
-          subheadtop={'80%'}
-          subheadleft={'22%'}
-          heading={'Experience Next-Level Gaming with the PS5'}
-          subHeading={'From $499'}
-          subheadcolor={'#560A40'}
-          buttoncolor="#F8D408"
-        />
-
-        <Grid
-          templateColumns="repeat(2, 2fr)"
-          rowGap="30px"
-          columnGap={30}
-          position="absolute"
-          top="11%"
-          left="45%"
-        >
-          <Banner
-            src={'images/13-inch-macbook-pro-m2-mock-feature-2.jpg'}
-            h={260}
-            w={350}
-            py="1px"
-            textbgGradient={'linear(to-r, #5AC8B1,#8183D2)'}
-            top={'30px'} */}
       <Box
         display="flex"
         position="relative"
         p={{ base: 10, md: 20 }}
-        background="url(images/background-shop.jpg)"
+        background={`url(${Shop})`}
         backgroundSize="300px 300px"
         backgroundPosition="center"
         border="2rem solid #394544"
@@ -84,7 +48,7 @@ const Home = () => {
       >
         <Box position="relative">
           <Banner
-            src={'images/PS5.jpg'}
+            src={PS5}
             h={{ base: '300px', md: '550px' }}
             w={{ base: '300px', md: '500px' }}
             p={{ base: '0px 5px 0px 5px', md: '17px 30px 17px 30px' }}
@@ -118,7 +82,7 @@ const Home = () => {
           left={{ base: '7%', md: '45%' }}
         >
           <Banner
-            src={'images/13-inch-macbook-pro-m2-mock-feature-2.jpg'}
+            src={mac}
             h={{ base: '200px', md: '260px' }}
             w={{ base: '150px', md: '350px' }}
             py={{ base: '5px', md: '1px' }}
@@ -147,7 +111,7 @@ const Home = () => {
             buttonFontSize={{ base: '9px', md: '1rem' }}
           />
           <Banner
-            src={'images/catbanner-02.jpg'}
+            src={catbanner1}
             h={{ base: '200px', md: '260px' }}
             w={{ base: '150px', md: '350px' }}
             py="1px"
@@ -176,7 +140,7 @@ const Home = () => {
             buttonFontSize={{ base: '9px', md: '1rem' }}
           />
           <Banner
-            src={'images/catbanner-03.jpg'}
+            src={catbanner2}
             h={{ base: '200px', md: '260px' }}
             w={{ base: '150px', md: '350px' }}
             py="1px"
@@ -205,7 +169,7 @@ const Home = () => {
             buttonFontSize={{ base: '9px', md: '1rem' }}
           />
           <Banner
-            src={'images/catbanner-04.jpg'}
+            src={catbanner3}
             h={{ base: '200px', md: '260px' }}
             w={{ base: '150px', md: '350px' }}
             py="1px"
@@ -441,7 +405,7 @@ const Home = () => {
                 borderLeft={borderLeft}
               >
                 <Image
-                  src={`images/${category.src}`}
+                  src={`../images/${category.src}`}
                   w={150}
                   h={150}
                   borderRadius={20}
@@ -599,7 +563,7 @@ const Home = () => {
             <SpecialProduct />
             <SpecialProduct />
             <SpecialProduct />
-            
+
           </Flex>
         </Box>
       </Flex>
