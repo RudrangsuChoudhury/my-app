@@ -14,9 +14,9 @@ const FamousProduct = (props) => {
       p={5}
       bg={colorMode === 'light' ? 'white' : 'gray.700'}
       borderRadius={10}
-      
+
     >
-      <Link>
+      <Link to=''>
         <Image
           src={'images/' + props.src}
           width={props.width}

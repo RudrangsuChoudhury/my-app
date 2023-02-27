@@ -21,7 +21,14 @@ const FeaturedProductCard = () => {
       height={['500px', '560px']}
     >
       <Box display="flex" flexDirection="column" rowGap={[2, 7]}>
-        <Link to=":id">
+        <Link
+          to={`${
+            location.pathname === '/'
+              ? '/product/:id'
+              : location.pathname == '/product/:id'?
+              "/product/:id":":id"
+          }`}
+        >
           <Box
             as={BsHeart}
             className="wishlist"
