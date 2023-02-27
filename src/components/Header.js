@@ -345,7 +345,7 @@ const {
                   Cancel
                 </Button>
                 <Link to="/checkout">
-                  <Button colorScheme="blue">Checkout</Button>
+                  <Button colorScheme="blue" onClick={onCartClose}>Checkout</Button>
                 </Link>
               </DrawerFooter>
             </DrawerContent>
