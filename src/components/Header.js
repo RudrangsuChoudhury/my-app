@@ -327,7 +327,6 @@ const {
                       </Td>
                       <Td>{totalPrice.toFixed(2)}</Td>
                       <Td>
-
                         <Box as={RiDeleteBin6Fill} boxSize="30px" color="red" />
                       </Td>
                     </Tr>
@@ -345,7 +344,9 @@ const {
                 <Button variant="outline" mr={3} onClick={onCartClose}>
                   Cancel
                 </Button>
-                <Button colorScheme="blue">Checkout</Button>
+                <Link to="/checkout">
+                  <Button colorScheme="blue">Checkout</Button>
+                </Link>
               </DrawerFooter>
             </DrawerContent>
           </Drawer>
