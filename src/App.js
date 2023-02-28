@@ -1,4 +1,7 @@
-import React from 'react';
+import React,{useState,useEffect} from 'react';
+//importing commerce js
+import { commerce } from './lib/commerce';
+
 
 import {  Routes, Route, BrowserRouter } from 'react-router-dom';
 import Design from './components/Design';
@@ -24,6 +27,15 @@ import Checkout from './pages/Checkout';
 
 
 function App() {
+  const [products, setProducts] =useState([]);
+  const fetchProducts = async () => {
+    const { data } = await commerce.products.list();
+    setProducts(data);
+  };
+  useEffect(() => {
+    fetchProducts();
+  }, []);
+  console.log(products);
   return (
     <>
       <BrowserRouter>
