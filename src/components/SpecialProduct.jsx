@@ -147,7 +147,7 @@ useEffect(() => {
         {product && product.name}
         </Text>
         <ReactStars
-          value={rating}
+          value={Number(rating)}
           count={5}
           size={24}
           activeColor="#ffd700"
