@@ -186,11 +186,11 @@ useEffect(() => {
         </Flex>
         <CircularProgress value={25} size="100px" color="#CF471D">
           <CircularProgressLabel
-            fontSize={12}
+            fontSize={11}
             color={colorMode === 'light' ? 'black' : '#F38A8A'}
             fontWeight="bold"
           >
-            Only {days} left
+            Only {days}<br/> days left
             <br /> hurry up
           </CircularProgressLabel>
         </CircularProgress>

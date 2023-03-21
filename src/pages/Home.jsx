@@ -41,13 +41,7 @@ import { fetchCart,addToCart } from '../reducers/cartSlice';
 import { json } from 'react-router-dom';
 
 
-let arr = [];
-while (arr.length < 4) {
-  let random_index = Math.floor(Math.random() * 12);
-  if (!arr.includes(random_index)) {
-    arr.push(random_index);
-  }
-}
+
 
 
 
@@ -60,6 +54,13 @@ const Home = () => {
    const url = new URL(
     "https://api.chec.io/v1/discounts/code_gnZO5k4EZvl7MN"
 );
+let arr = [];
+while (arr.length < 4) {
+  let random_index = Math.floor(Math.random() * products.length);
+  if (!arr.includes(random_index)) {
+    arr.push(random_index);
+  }
+}
 
 const headers = {
     "X-Authorization": "sk_50715b4ad7edd0ba4cf7f56d39b25c1d4450aba76925a",

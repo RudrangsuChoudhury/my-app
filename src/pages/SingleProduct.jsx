@@ -1,6 +1,6 @@
 import React from 'react'
-import { useState } from 'react'
-import { Link } from 'react-router-dom';
+import { useState,useEffect,useRef } from 'react'
+import { Link,useNavigate } from 'react-router-dom';
 import { ChevronRightIcon } from '@chakra-ui/icons';
 import {BsFillCartPlusFill} from 'react-icons/bs'
 import {HiShoppingBag} from 'react-icons/hi'
@@ -43,7 +43,9 @@ import FeaturedProductCard from '../components/FeaturedProductCard';
 import ReactImageZoom from 'react-image-zoom';
 import RandomImage from '../images/Random_product_1.jpg';
 import { useSelector } from 'react-redux';
-const SingleProduct = () => {
+import { useDispatch} from 'react-redux';
+import { fetchProducts, getIsFetching } from '../reducers/productsSlice';
+const SingleProduct = ({ match }) => {
     const { colorMode } = useColorMode();
      const [hasPurchased, setHasPurchased] = useState(false);
      const[showReviewForm, setShowReviewForm] = useState(false);
@@ -56,7 +58,26 @@ const props = {
   img:  RandomImage ,
 };
 
-const products = useSelector((state) => state.products.products);
+//  const { id } = match.params;
+//   const dispatch = useDispatch();
+//   const isFetching = useSelector(getIsFetching);
+//   const product = useSelector((state) => state.products.products[0]);
+
+//   useEffect(() => {
+//     dispatch(fetchProducts(id));
+//   }, [dispatch, id]);
+
+//   if (isFetching) {
+//     return <div>Loading...</div>;
+//   }
+
+//   if (!product) {
+//     return <div>Product not found</div>;
+//   }
+
+
+
+// const products = useSelector((state) => state.products.products);
   return (
     <>
       <Meta title={'Product Name'} />
@@ -86,6 +107,7 @@ const products = useSelector((state) => state.products.products);
         <Flex columnGap="30px" align="start" p="20px" bg="white">
           <Flex width="30%" direction="column" borderRadius="10px" rowGap={5}>
             <ReactImageZoom {...props} />
+
 
             <Grid gap="15px" templateColumns="repeat(2, 1fr)">
               <Box
@@ -140,7 +162,7 @@ const products = useSelector((state) => state.products.products);
               borderBottom="1px solid rgba(0,0,0,0.1)"
               py="10px"
             >
-              <Text fontSize="16px" fontWeight="600">
+              <Text fontSize="16px" fontWeight="600" color='black'>
                ₹124999.00
               </Text>
               <Flex align="center" columnGap="10px">

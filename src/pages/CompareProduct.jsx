@@ -9,13 +9,15 @@ import {
   Image,
   useColorMode,
   Text
-
 } from '@chakra-ui/react';
 import { ChevronRightIcon } from '@chakra-ui/icons';
 import { Link } from 'react-router-dom';
 import { RxCross1 } from 'react-icons/rx';
 import Color from '../components/Color';
 import compareimage from '../images/Random_product_1.jpg';
+import compareimage1 from '../images/Random_product_2.jpg';
+import compareimage2 from '../images/smartwatch_famous_dark.jpg';
+import CompareCard from '../components/CompareCard';
 const CompareProduct = () => {
     const { colorMode } = useColorMode();
   return (
@@ -45,86 +47,14 @@ const CompareProduct = () => {
         px={[5, 100]}
         gap={[5, 10]}
       >
-        <Flex
-          px="20px"
-          py="10px"
-          bgGradient={
-            colorMode === 'light'
-              ? 'linear(to-r,white,white)'
-              : 'linear(90deg, rgb(40 134 134) 0%, rgb(22 85 102) 100%)'
-          }
-          w="300px"
-          borderRadius={10}
-          direction="column"
-          position="relative"
-          rowGap={5}
-          align="start"
-        >
-          <Image
-            src={compareimage}
-            boxSize="70%"
-            alignSelf="center"
-          />
-          <Box
-            as={RxCross1}
-            w="20px"
-            h="20px"
-            ml="10px"
-            mt="10px"
-            cursor="pointer"
-            position="absolute"
-            top="2%"
-            left="83%"
-          />
-          <Text
-            color="1c1c1b"
-            fontSize="15px"
-            lineHeight="22px"
-            fontWeight="500"
-          >
-            Samsung Galaxy S23 Ultra 5G
-          </Text>
-
-          <Text fontSize="15px" lineHeight="22px" fontWeight="400">
-         ₹124999.00
-          </Text>
-
-            <Flex
-              justify="space-between"
-              align="center"
-              p="10px 0px"
-              borderTop="1px solid rgba(0,0,0,0.1)"
-            >
-                <Text fontWeight='bold'>Brand</Text>
-                <Text>Samsung</Text>
-            </Flex>
-            <Flex
-              justify="space-between"
-              align="center"
-              p="10px 0px"
-              borderTop="1px solid rgba(0,0,0,0.1)"
-            >
-                <Text fontWeight='bold'>Type</Text>
-                <Text>SmartPhone</Text>
-            </Flex>
-
-            <Flex
-              justify="space-between"
-              align="center"
-              p="10px 0px"
-              borderTop="1px solid rgba(0,0,0,0.1)"
-            >
-                <Text fontWeight='bold'>Color</Text>
-              <Color/>
-            </Flex>
-            
-
-
-        </Flex>
-
+        <CompareCard src={compareimage} name="Samsung Galaxy S23 Ultra 5G (Cream, 12GB, 256GB Storage)" price="₹124,999.00"
+        brand="Samsung" Type="Smartphone"  color='Beige'/>
+        <CompareCard src={compareimage1} name="Sennheiser HD 458 ANC Foldable Bluetooth Wireless Over Ear Headphones" price="₹8,748.00"
+        brand="Sennheiser" Type="Headphone" color='Black Red'/>
+        <CompareCard src={compareimage2} name="Apple Watch Series 8 [GPS 41 mm] Smart Watch" price="₹41,990.00"
+        brand="Apple" Type="Watch" color='Black'/>
       </Box>
     </>
   );
 }
-
 export default CompareProduct

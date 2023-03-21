@@ -71,10 +71,18 @@ const OurStore = () => {
 
 
 
+
 const dispatch = useDispatch();
   const isProductsFetching = useSelector(getIsFetching);
 ;
   const products = useSelector((state) => state.products.products);
+  let arr = [];
+while (arr.length < 2) {
+  let random_index = Math.floor(Math.random() * products.length);
+  if (!arr.includes(random_index)) {
+    arr.push(random_index);
+  }
+}
 useEffect(() => {
       dispatch(fetchProducts());
     dispatch(fetchCart());
@@ -596,7 +604,7 @@ const handleFilter = (filterType, filterValue) => {
                 direction={['column', 'row']}
               >
                 <Image
-                  src={Random1}
+                  src={products[arr[0]].image.url}
                   width={[100, 150]}
                   height={[100, 200]}
                 />
@@ -606,7 +614,7 @@ const handleFilter = (filterType, filterValue) => {
                     fontSize={['10px', '13px']}
                     mt={['10px', 0]}
                   >
-                    Samsung Galaxy S23 Ultra 5G
+                   {products[arr[0]].name}
                   </Text>
                   <ReactStars
                     value={4}
@@ -616,7 +624,7 @@ const handleFilter = (filterType, filterValue) => {
                     edit={false}
                   />
                   <Text fontSize={['10px', '13px']} fontWeight="bold">
-                   ₹124999.00
+              {products[arr[0]].price.formatted_with_symbol}
                   </Text>
                 </Flex>
               </Flex>
@@ -629,7 +637,7 @@ const handleFilter = (filterType, filterValue) => {
                 direction={['column', 'row']}
               >
                 <Image
-                  src={Random2}
+                  src={products[arr[1]].image.url}
                   width={[100, 150]}
                   height={[100, 200]}
                 />
@@ -639,7 +647,7 @@ const handleFilter = (filterType, filterValue) => {
                     fontSize={['10px', '13px']}
                     mt={['10px', 0]}
                   >
-                    Sennheiser HD458
+                   {products[arr[1]].name}
                   </Text>
                   <ReactStars
                     value={4}
@@ -649,7 +657,7 @@ const handleFilter = (filterType, filterValue) => {
                     edit={false}
                   />
                   <Text fontSize={['10px', '13px']} fontWeight="bold">
-                    ₹ 8,748
+                   {products[arr[1]].price.formatted_with_symbol}
                   </Text>
                 </Flex>
               </Flex>

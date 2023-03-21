@@ -154,7 +154,7 @@ display={(scrollDirection  === "down" && location.pathname==='/') ? "none" : "bl
 
 
       >
-        <Flex align="center" justify="space-around" py={1}>
+        <Flex align="center" justify="space-around" py={1} px={[2,0]}>
           <motion.div
             animate={{ rotate: 360 }}
             transition={{ loop: Infinity, duration: 2 }}
@@ -180,15 +180,15 @@ display={(scrollDirection  === "down" && location.pathname==='/') ? "none" : "bl
                   : 'linear(to-l, #74cec6, #46d122)'
               }
               bgClip="text"
-              fontSize={['20px', '20px', '3xl']}
+              fontSize={['18px', '20px', '3xl']}
               fontWeight={1000}
               fontFamily="Calligraffitti"
             >
               <Link>The Student's Marketplace</Link>
             </Text>
             <Text
-              // fontSize={['0.7em','0.7em',"1xl"]}
-              fontSize="1xl"
+              fontSize={['0.7em','0.7em',"1xl"]}
+
               fontWeight={700}
               bgClip="text"
               bgGradient={
@@ -196,7 +196,7 @@ display={(scrollDirection  === "down" && location.pathname==='/') ? "none" : "bl
                   ? 'linear(to-l, #0A3D64, #09548E)'
                   : 'linear(to-l, #ff7e5f, #feb47b)'
               }
-              ml={[5, 10, 5]}
+              ml={[2, 10, 5]}
             >
               Unlock Your Potential with the Student's Marketplace
             </Text>
@@ -248,7 +248,7 @@ display={(scrollDirection  === "down" && location.pathname==='/') ? "none" : "bl
         justify="center"
         flexDirection={['column', 'column', 'row']}
         columnGap={['0px', '0px', '160px']}
-        rowGap={['40px', '20px', '0px']}
+        rowGap={['20px',  '0px']}
         height={['160px', '150px', '90px']}
         bgGradient={
           colorMode === 'light'
@@ -427,12 +427,12 @@ min-height= '100%'
         p={1}
         color="white"
         align="center"
-        columnGap={5}
+        columnGap={[2,5]}
         flexDirection={['column', 'column', 'row']}
         justify={['center', 'center', 'normal']}
       >
 
-        <Flex px={95} py={2}>
+        <Flex px={[10,95]} py={2}>
           <NavLink className="navlink" to="/">
             <Text
               color={colorMode === 'light' ? '#52A6E5' : 'white'}
