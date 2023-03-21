@@ -61,6 +61,7 @@ while (arr.length < 4) {
     arr.push(random_index);
   }
 }
+console.log(arr)
 
 const headers = {
     "X-Authorization": "sk_50715b4ad7edd0ba4cf7f56d39b25c1d4450aba76925a",
