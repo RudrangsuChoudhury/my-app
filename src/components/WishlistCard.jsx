@@ -1,11 +1,70 @@
-import React from 'react'
-import { Flex, useColorMode, Image, Text, Box,Button } from '@chakra-ui/react'
+import React,{useState,useEffect} from 'react'
+import { Flex, useColorMode, Image, Text, Box,Button,useToast } from '@chakra-ui/react'
 import { RxCross1 } from 'react-icons/rx'
 import {BsFillCartPlusFill} from 'react-icons/bs'
+import { useDispatch } from 'react-redux'
+import { removeFromWishlist } from '../reducers/wishlistSlice'
+import { addToCart, fetchCart } from '../reducers/cartSlice'
+import { useSelector } from 'react-redux'
+
 
 
 const WishlistCard = (props) => {
   const { colorMode } = useColorMode()
+  const dispatch = useDispatch()
+  const handleRemove = () => {
+
+  dispatch(removeFromWishlist(props.id))
+}
+
+//adding to cart
+  const cart=useSelector(state=>state.cart)
+
+ const [isAddingToCart, setIsAddingToCart] = useState(false);
+  const [currentQuantity, setCurrentQuantity] = useState(0);
+
+ const toast = useToast();
+
+ useEffect(() => {
+  dispatch(fetchCart())
+
+  }, [])
+
+useEffect(() => {
+    if(!cart.line_items) return;
+    // Set the current quantity of this product in the cart
+    const lineItem = cart.line_items.find((item) => item.product_id === props.id);
+    if (lineItem) {
+      setCurrentQuantity(lineItem.quantity);
+    } else {
+      setCurrentQuantity(0);
+    }
+  }, [cart]);
+
+   const handleAddToCart = async () => {
+    if (isAddingToCart) {
+      return;
+    }
+    if (currentQuantity >= 10) {
+      toast({
+        title: 'Max quantity reached',
+        description: `You can only add up to 10 of any item to your cart.`,
+        status: 'warning',
+        duration: 2000,
+        isClosable: true,
+      });
+      return;
+    }
+    setIsAddingToCart(true);
+    try {
+      await dispatch(addToCart(props.id, 1));
+      setCurrentQuantity(currentQuantity + 1);
+    } catch (error) {
+      console.log(error);
+    }
+    setIsAddingToCart(false);
+  };
+
   return (
     <Flex direction="column" w="300px" h='50%' p='20px' bg='white' borderRadius='20px'>
           <Flex
@@ -33,6 +92,7 @@ const WishlistCard = (props) => {
               position="absolute"
               top="2%"
               left="83%"
+              onClick={()=>handleRemove()}
             />
           </Flex>
           <Flex direction='column' rowGap='10px' mt='10px' p={2}>
@@ -42,13 +102,13 @@ const WishlistCard = (props) => {
               lineHeight="22px"
               fontWeight="500"
             >
-             Samsung Galaxy S23 Ultra 5G
+              {props.name}
             </Text>
             <Text fontSize="15px" lineHeight="22px" fontWeight="400">
-             ₹124999.00
+              {props.price}
             </Text>
 
-             <Button colorScheme="orange" leftIcon={<BsFillCartPlusFill />}>
+             <Button colorScheme="orange" leftIcon={<BsFillCartPlusFill />} onClick={()=>handleAddToCart()}>
                 Add to Cart
               </Button>
 

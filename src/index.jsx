@@ -34,16 +34,20 @@ import ShippingPolicy from './pages/ShippingPolicy';
 import TermAndConditions from './pages/TermAndConditions';
 import SingleProduct from './pages/SingleProduct';
 import Cart from './pages/Cart';
-import Checkout from './pages/Checkout';
+import Checkout from './pages/Checkout/Checkout';
+
+
 const container = document.getElementById('root');
 const root = createRoot(container);
+
+
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path="/" element={<Design />}>
       <Route index element={<Home />} />
 
       {/* ... etc. */}
-      <Route exact path="about" element={<About />} />
+        <Route exact path="about" element={<About />} />
             <Route exact path="contact" element={<Contact />} />
             <Route exact path="ourstore" element={<OurStore />}/>
             <Route exact path="product/:id" element={<SingleProduct />} />

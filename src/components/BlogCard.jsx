@@ -3,7 +3,7 @@ import React from 'react'
 import { Link } from 'react-router-dom';
 import blogimage from '../images/blogs1.png';
 
-const BlogCard = () => {
+const BlogCard = ({title,description,date}) => {
   const { colorMode } = useColorMode();
   return (
     <Box
@@ -32,7 +32,7 @@ const BlogCard = () => {
           color={colorMode === 'light' ? '#777777' : '#fff'}
           mb={[5, 10]}
         >
-          7 Feb, 2023
+    {date}
         </Text>
         <Text
           fontSize="17px"
@@ -41,7 +41,7 @@ const BlogCard = () => {
           lineHeight={['18px', '20px']}
           mb={['5px', '10px']}
         >
-          Revolutionizing Online Shopping: The Benefits of E-commerce
+         {title}
         </Text>
         <Text
           fontSize="13px"
@@ -49,10 +49,10 @@ const BlogCard = () => {
           color={colorMode}
           mb={5}
         >
-          Lorem ipsum, dolor sit amet consectetur adipisicing elit.
+          {description.slice(0, 50)}
         </Text>
-        <Link to="#">
-          <Button size={['sm', 'lg']} colorScheme="teal" borderRadius={20}>
+        <Link to="/blogs">
+          <Button size={['sm', 'lg']} colorScheme="teal" borderRadius={20} >
             Read More
           </Button>
         </Link>

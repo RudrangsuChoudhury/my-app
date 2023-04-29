@@ -24,7 +24,7 @@ import ShippingPolicy from './pages/ShippingPolicy';
 import TermAndConditions from './pages/TermAndConditions';
 import SingleProduct from './pages/SingleProduct';
 import Cart from './pages/Cart';
-import Checkout from './pages/Checkout';
+import Checkout from './pages/Checkout/Checkout';
 
 
 
@@ -40,7 +40,7 @@ function App() {
   useEffect(() => {
     fetchProducts();
   }, []);
-  console.log(products);
+
   return (
     <>
       <BrowserRouter>

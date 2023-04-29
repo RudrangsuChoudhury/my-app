@@ -1,5 +1,5 @@
 import React from 'react'
-import { Link } from 'react-router-dom';
+import { Link ,useLocation} from 'react-router-dom';
 import { ChevronRightIcon } from '@chakra-ui/icons';
 import {
     Box,
@@ -13,9 +13,15 @@ import {
 } from '@chakra-ui/react';
 import Meta from '../components/Meta';
 import {BsArrowLeft} from 'react-icons/bs'
+import blog from '../components/customcomponent/blogarray';
 
 const SingleBlog = () => {
     const { colorMode } = useColorMode();
+    const location = useLocation();
+    const blognumber=location.pathname.slice(6);
+   
+
+
   return (
     <>
       <Meta title={'Dynamic Blog Name'} />
@@ -55,20 +61,10 @@ const SingleBlog = () => {
       >
         <ChakraLink as={Link} to="/blogs" color='#777777' fontSize='15px'><Flex align='center' gap='10px'><BsArrowLeft size={20}/>Go Back to Blogs</Flex></ChakraLink>
         <Text fontSize="24px" fontWeight="bold"  color='#1c1c1b'>
-          Revolutionizing Online Shopping: The Benefits of E-commerce
+          {blog[blognumber-1].title}
         </Text>
         <Text fontSize="lg">
-          E-commerce has transformed the retail landscape by providing
-          round-the-clock convenience, a vast array of products, and significant
-          economic benefits. Online vendors can transfer their reduced overhead
-          costs to clients, thereby offering substantial cost savings.
-          Furthermore, small enterprises can level the playing field by
-          targeting a wider audience through a well-crafted website and an
-          effective marketing strategy. E-commerce allows patrons to shop from
-          the comfort of their abodes, effectively replacing the need for
-          physical retail stores. The continual expansion of e-commerce is a
-          definitive indication that online shopping is the future path to
-          follow.
+          {blog[blognumber-1].description}
         </Text>
       </Box>
         </Box>

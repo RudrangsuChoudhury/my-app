@@ -18,8 +18,7 @@ import { useSelector,useDispatch } from 'react-redux';
 import { addToCart } from '../reducers/cartSlice';
 const SpecialProduct = ({product,discountData,rating}) => {
   const { colorMode } = useColorMode();
-  console.log((product ));
-  console.log(discountData)
+
   const expirationDate = discountData.expires_on;
   const [timeLeft, setTimeLeft] = useState({
     hours: '00',
@@ -109,18 +108,24 @@ useEffect(() => {
     setIsAddingToCart(false);
   };
   return (
-    <Flex
-      w={350}
-      p="10px"
+    <Flex direction='column'
+     bgColor={colorMode === 'light' ? 'white' : '#0A6C7C'}
+     p="20px"
       borderRadius="10px"
-      bgColor={colorMode === 'light' ? 'white' : '#0A6C7C'}
-      h={450}
+        h={500}
+           w={360}>
+    <Flex
+
+
+
+
+
       justify="space-between"
     >
-      <Image src={product &&product.image&& product.image.url} w={130} h={300} alignSelf='center' mr={1}/>
+      <Image src={product &&product.image&& product.image.url} w={130} h={280} alignSelf='center' mr={1}/>
       <Flex
         align="center"
-        justify="flex-end"
+        justify="flex-start"
         flexDirection="column"
         rowGap={2}
       >
@@ -159,18 +164,8 @@ useEffect(() => {
 
         {/* Discount */}
         <Flex align="center" columnGap={5}>
-          <Text
-            fontSize={15}
-            bgGradient={
-              colorMode === 'light'
-                ? 'black'
-                : 'linear(90deg, rgb(216, 209, 147) 23%, rgba(45,253,135,1) 100%)'
-            }
-            bgClip="text"
-          >
-            {days} days
-          </Text>
-          <Flex flexDirection="row" align="center" columnGap={2}>
+
+          <Flex flexDirection="row" align="center" columnGap={2} justify='center'>
             <Circle bg="#fc353c" p={7} size="25px" color="white">
              {timeLeft.hours}
             </Circle>
@@ -208,7 +203,15 @@ useEffect(() => {
             </Text>
 
         </Button>
+
       </Flex>
+
+
+    </Flex>
+     <Flex justify='space-around' w='100%' color='grey'>
+        <Text>Use Code :</Text>
+           <Text>{discountData.code}</Text>
+           </Flex>
     </Flex>
   );
 };

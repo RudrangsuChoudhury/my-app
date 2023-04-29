@@ -36,3 +36,8 @@ export const updateCart = (itemId, quantity) => async (dispatch) => {
 
   dispatch(setCart(item));
 }
+export const refreshCart = () => async (dispatch) => {
+  const newCart = await commerce.cart.refresh();
+
+  dispatch(setCart(newCart));
+};

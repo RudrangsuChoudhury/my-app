@@ -5,7 +5,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import blogimage from '../images/blogs1.png';
 
-const BlogBlogCard = () => {
+const BlogBlogCard = ({title,description,date,id}) => {
   const { colorMode } = useColorMode();
   const [isHovered, setIsHovered] = React.useState(false);
   const hoverAnimation = useSpring({
@@ -16,6 +16,7 @@ const BlogBlogCard = () => {
 
     },
   });
+ 
 
   return (
     <Box
@@ -55,7 +56,7 @@ const BlogBlogCard = () => {
           color={colorMode === 'light' ? '#777777' : '#fff'}
           mb={[1, 10]}
         >
-          7 Feb, 2023
+         {date}
         </Text>
         <Text
           fontSize={['8px',"17px"]}
@@ -64,7 +65,7 @@ const BlogBlogCard = () => {
           lineHeight={['15px', '20px']}
           mb={['2px', '10px']}
         >
-          Revolutionizing Online Shopping: The Benefits of E-commerce
+         {title}
         </Text>
         <Text
           fontSize={["8px","13px"]}
@@ -72,9 +73,9 @@ const BlogBlogCard = () => {
           color={colorMode}
           mb={5}
         >
-          Lorem ipsum, dolor sit amet consectetur adipisicing elit.
+        {description.slice(0, 50)}
         </Text>
-        <Link to="/blog/:id">
+        <Link to={`/blog/${id}`}>
           <Button size={['sm', 'lg']} colorScheme="teal" borderRadius={20}>
             Read More
           </Button>

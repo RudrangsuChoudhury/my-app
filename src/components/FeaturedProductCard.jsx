@@ -12,6 +12,8 @@ import { useSelector } from 'react-redux';
 
 import { addToCart } from '../reducers/cartSlice';
 import { useDispatch } from 'react-redux';
+import { addToCompare } from '../reducers/compareSlice';
+import { addToWishlist } from '../reducers/wishlistSlice';
 const FeaturedProductCard = ({image,image1,name,rating,brand,price,link}) => {
   const{colorMode} = useColorMode()
   let location = useLocation();
@@ -59,6 +61,42 @@ useEffect(() => {
     setIsAddingToCart(false);
   };
 
+  // handling wishlist and compare
+
+  const compare=useSelector(state=>state.compare)
+ const handleaddtoCompare=async()=>{
+  if(compare.length>=4){
+    toast({
+      title: 'Max capacity reached',
+      description: `You can only add up to 4  item to  compare .Please remove some of them`,
+      status: 'warning',
+      duration: 3000,
+      isClosable: true,
+    });
+    return;
+  }
+    await dispatch(addToCompare(link))
+
+ }
+
+
+const wishlist=useSelector(state=>state.wishlist)
+ const handleaddtoWishlist=async()=>{
+  if(wishlist.length>=4){
+    toast({
+      title: 'Max capacity reached',
+      description: `You can only add up to 4  item to  wishlist .Please remove some of them`,
+      status: 'warning',
+      duration: 3000,
+      isClosable: true,
+    });
+    return;
+  }
+    await dispatch(addToWishlist(link))
+
+ }
+
+
 
 
   return (
@@ -79,6 +117,8 @@ useEffect(() => {
             className="wishlist"
             boxSize={['10px', '20px']}
             color={colorMode === 'light' ? 'black' : 'rgb(225, 146, 228)'}
+            cursor="pointer"
+            onClick={handleaddtoWishlist}
           />
 
         <Box
@@ -88,10 +128,12 @@ useEffect(() => {
           justifyContent="center"
         >
           <Image src={image} className="featuredimage"></Image>
+
           <Image
             src={image1}
             className="featuredimage"
           ></Image>
+
         </Box>
         <Text
           color={colorMode === 'light' ? '#bf4800' : '#2bcfb0'}
@@ -103,6 +145,7 @@ useEffect(() => {
         <Text color="#1c1c1b" fontSize="15px" fontWeight="bold">
          {name}
         </Text>
+
         <ReactStars
           half={false}
           value={Number(rating)}
@@ -111,6 +154,7 @@ useEffect(() => {
           activeColor="#ffd700"
           edit={false}
         />
+
         <Text>{price}</Text>
       </Box>
       <Box
@@ -123,21 +167,23 @@ useEffect(() => {
         className="product-card_hover"
         transition=".3s"
       >
-        <Link>
+
           <Box
             as={IoGitCompareSharp}
             boxSize={['10px', '20px']}
             color={colorMode === 'light' ? 'black' : 'rgb(50, 214, 241)'}
+            cursor="pointer"
+            onClick={handleaddtoCompare}
           />
-        </Link>
+
          <Link
-          to={`${
-            location.pathname === '/'
-              ? `/product/${link}`
-              : location.pathname == '/product/:id'
-              ? `/product/${link}`
-              : ':id'
-          }`}
+          to={
+
+
+               `/product/${link}`
+          }
+
+
 
         >
           <Box

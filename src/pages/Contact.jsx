@@ -1,4 +1,4 @@
-import React from 'react';
+import React,{useState} from 'react';
 import Meta from '../components/Meta';
 import {
   Box,
@@ -18,6 +18,7 @@ import {
   ListItem,
   ListIcon,
   Link as ChakraLink,
+  useToast,
 } from '@chakra-ui/react';
 import { ChevronRightIcon } from '@chakra-ui/icons';
 import { Link } from 'react-router-dom';
@@ -25,6 +26,30 @@ import { MdHome, MdCall, MdMailOutline, MdInfo } from 'react-icons/md';
 const Contact = () => {
   const { colorMode } = useColorMode();
   const [isSmallerThan500] = useMediaQuery('(max-width: 500px)');
+    const toast = useToast();
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [phone, setPhone] = useState('');
+  const [comments, setComments] = useState('');
+
+  const handleSubmit = (event) => {
+
+    // // Do something with the form data
+  
+    setName('');
+    setEmail('');
+    setPhone('');
+    setComments('');
+    toast({
+      title: 'Thanks for contacting us !',
+      description: 'We will get back to you soon.',
+      status: 'success',
+      duration: 3000,
+      isClosable: true,
+    });
+
+  };
+
   return (
     <>
       <Meta title={'Contact Us'} />
@@ -69,7 +94,7 @@ const Contact = () => {
                 Contact
               </Text>
               <Box as="form" p={4} px={0} >
-                <FormControl id="name" isRequired w='400px'>
+                <FormControl id="name" isRequired w='400px' >
                   <FormLabel>Name</FormLabel>
                   <Input
                     type="text"
@@ -77,6 +102,8 @@ const Contact = () => {
                     _placeholder={{
                       color: colorMode === 'light' ? 'gray.500' : 'green',
                     }}
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
 
                   />
                 </FormControl>
@@ -88,6 +115,8 @@ const Contact = () => {
                     _placeholder={{
                       color: colorMode === 'light' ? 'gray.500' : 'green',
                     }}
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
                   />
                 </FormControl>
                 <FormControl id="phone" isRequired mt={4}>
@@ -98,6 +127,8 @@ const Contact = () => {
                     _placeholder={{
                       color: colorMode === 'light' ? 'gray.500' : 'green',
                     }}
+                    value={phone}
+                    onChange={(e) => setPhone(e.target.value)}
                   />
                 </FormControl>
                 <FormControl id="comments" isRequired mt={4}>
@@ -107,9 +138,11 @@ const Contact = () => {
                     _placeholder={{
                       color: colorMode === 'light' ? 'gray.500' : 'green',
                     }}
+                    value={comments}
+                    onChange={(e) => setComments(e.target.value)}
                   />
                 </FormControl>
-                <Button colorScheme="blue" mt={4}>
+                <Button colorScheme="blue" mt={4} onClick={handleSubmit}>
                   Submit
                 </Button>
               </Box>

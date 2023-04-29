@@ -1,5 +1,5 @@
 import React from 'react';
-import { useState,useEffect} from 'react';
+import { useState,useEffect,useRef} from 'react';
 
 import { Box, Grid, Text, Image, Flex, useColorMode } from '@chakra-ui/react';
 import Banner from '../components/Banner';
@@ -38,7 +38,8 @@ import Famous5 from '../images/homepad_famous.jpg';
 import { useSelector,useDispatch } from 'react-redux';
 import { fetchProducts } from '../reducers/productsSlice';
 import { fetchCart,addToCart } from '../reducers/cartSlice';
-import { json } from 'react-router-dom';
+import { Link, json } from 'react-router-dom';
+import blog from '../components/customcomponent/blogarray';
 
 
 
@@ -50,18 +51,29 @@ const Home = () => {
   const dispatch = useDispatch();
 
   const products = useSelector((state) => state.products.products);
+
+
+
   const[discountData,setDiscountData] = useState({} )
    const url = new URL(
-    "https://api.chec.io/v1/discounts/code_gnZO5k4EZvl7MN"
+    "https://api.chec.io/v1/discounts/code_yA6nldmNZLwEWb"
 );
-let arr = [];
-while (arr.length < 4) {
-  let random_index = Math.floor(Math.random() * products.length);
-  if (!arr.includes(random_index)) {
-    arr.push(random_index);
+
+
+ const arr = useRef([]);
+  if (arr.current.length === 0) {
+    while (arr.current.length < 4) {
+      let random_index = Math.floor(Math.random() * 13);
+      if (!arr.current.includes(random_index)) {
+        arr.current.push(random_index);
+      }
+    }
   }
-}
-console.log(arr)
+
+
+
+
+
 
 const headers = {
     "X-Authorization": "sk_50715b4ad7edd0ba4cf7f56d39b25c1d4450aba76925a",
@@ -77,6 +89,7 @@ async function fetchDiscountData() {
         headers: headers,
     });
     const data = await response.json();
+
     setDiscountData(data)
 
 }
@@ -85,10 +98,10 @@ async function fetchDiscountData() {
 
   useEffect(() => {
     dispatch(fetchProducts());
+
     dispatch(fetchCart());
     fetchDiscountData()
   }, []);
-
 
 
 
@@ -441,37 +454,39 @@ async function fetchDiscountData() {
         <Grid
           m={30}
           fontFamily="Fira Sans"
-          templateColumns={['repeat(2,5fr)', 'repeat(5, 2fr)']}
+          templateColumns={['repeat(2,4fr)', 'repeat(4, 2fr)']}
           bgColor={colorMode === 'light' ? 'white' : '#2B5686'}
           boxShadow="0px 0px 9px -4px #484E51"
           w={['350px', '1200px']}
         >
           {/* Iterate through the categories and render each one */}
           {categories.map((category, index) => {
+         
             let borderBottom;
             let borderLeft;
             let borderRight;
             let borderTop =
-              index > 4
+              index > 3
                 ? `1px solid ${colorMode === 'light' ? '#ededed' : 'red'}`
                 : colorMode === 'light'
                 ? '1px solid transparent'
                 : '1px solid red';
-            if (index >= 5 && index <= 9) {
+            if (index >= 4 && index <= 8) {
               borderBottom = `${colorMode === 'light' ? '0px' : '1px'} solid ${
                 colorMode === 'light' ? '#ededed' : 'red'
               }`;
             }
-            if (index === 0 || index === 5) {
+            if (index === 0 || index === 4) {
               borderLeft = `1px solid ${
                 colorMode === 'light' ? 'transparent' : 'red'
               }`;
             }
             borderRight =
-              colorMode === 'light' && (index === 4 || index === 9)
+              colorMode === 'light' && (index === 3 || index === 8)
                 ? '0px'
                 : `1px solid ${colorMode === 'light' ? '#ededed' : 'red'}`;
             return (
+              <Link to='/ourstore'>
               <Flex
                 align="center"
                 justify="center"
@@ -502,6 +517,7 @@ async function fetchDiscountData() {
                   </Text>
                 </Box>
               </Flex>
+              </Link>
             );
           })}
         </Grid>
@@ -532,38 +548,38 @@ async function fetchDiscountData() {
           gridTemplateColumns={['repeat(2,1fr)', 'repeat(4,1fr)']}
           gridGap={[5, 20]}
         >
-          <FeaturedProductCard image={products[arr[0]].image.url}
-          image1={products[arr[0]].assets[1].url}
-          name={products[arr[0]].name}
-          rating={products[arr[0]].attributes[1].value}
-          brand={products[arr[0]].name.split(" ")[0].toUpperCase()}
-          price={products[arr[0]].price.formatted_with_symbol}
-          link={products[arr[0]].id}
+          <FeaturedProductCard image={products[arr.current[0]].image.url}
+          image1={products[arr.current[0]].assets[1].url}
+          name={products[arr.current[0]].name}
+          rating={products[arr.current[0]].attributes[1].value}
+          brand={products[arr.current[0]].name.split(" ")[0].toUpperCase()}
+          price={products[arr.current[0]].price.formatted_with_symbol}
+          link={products[arr.current[0]].id}
 
         />
-          <FeaturedProductCard image={products[arr[1]].image.url}
-          image1={products[arr[1]].assets[1].url}
-          name={products[arr[1]].name}
-          rating={products[arr[1]].attributes[1].value}
-            brand={products[arr[1]].name.split(" ")[0].toUpperCase()}
-            price={products[arr[1]].price.formatted_with_symbol}
-            link={products[arr[1]].id}
+          <FeaturedProductCard image={products[arr.current[1]].image.url}
+          image1={products[arr.current[1]].assets[1].url}
+          name={products[arr.current[1]].name}
+          rating={products[arr.current[1]].attributes[1].value}
+            brand={products[arr.current[1]].name.split(" ")[0].toUpperCase()}
+            price={products[arr.current[1]].price.formatted_with_symbol}
+            link={products[arr.current[1]].id}
             />
-          <FeaturedProductCard image={products[arr[2]].image.url}
-          image1={products[arr[2]].assets[1].url}
-          name={products[arr[2]].name}
-          rating={products[arr[2]].attributes[1].value}
-            brand={products[arr[2]].name.split(" ")[0].toUpperCase()}
-             price={products[arr[2]].price.formatted_with_symbol}
-             link={products[arr[2]].id}
+          <FeaturedProductCard image={products[arr.current[2]].image.url}
+          image1={products[arr.current[2]].assets[1].url}
+          name={products[arr.current[2]].name}
+          rating={products[arr.current[2]].attributes[1].value}
+            brand={products[arr.current[2]].name.split(" ")[0].toUpperCase()}
+             price={products[arr.current[2]].price.formatted_with_symbol}
+             link={products[arr.current[2]].id}
               />
-          <FeaturedProductCard image={products[arr[3]].image.url}
-          image1={products[arr[3]].assets[1].url}
-          name={products[arr[3]].name}
-          rating={products[arr[3]].attributes[1].value}
-            brand={products[arr[3]].name.split(" ")[0].toUpperCase()}
-            price={products[arr[3]].price.formatted_with_symbol}
-            link={products[arr[3]].id}
+          <FeaturedProductCard image={products[arr.current[3]].image.url}
+          image1={products[arr.current[3]].assets[1].url}
+          name={products[arr.current[3]].name}
+          rating={products[arr.current[3]].attributes[1].value}
+            brand={products[arr.current[3]].name.split(" ")[0].toUpperCase()}
+            price={products[arr.current[3]].price.formatted_with_symbol}
+            link={products[arr.current[3]].id}
            />
         </Box>
         )}
@@ -685,11 +701,14 @@ async function fetchDiscountData() {
             rowGap={['10px', '0px']}
           >
             <SpecialProduct product={products[6]} discountData={discountData}
-            rating={products[6].attributes[1].value}/>
+            rating={products[6].attributes[1].value}
+            />
             <SpecialProduct product={products[8]} discountData={discountData}
-             rating={products[8].attributes[1].value}/>
+             rating={products[8].attributes[1].value}
+          />
             <SpecialProduct product={products[10]} discountData={discountData}
-             rating={products[10].attributes[1].value}/>
+             rating={products[10].attributes[1].value}
+             />
           </Flex>
           )}
         </Box>
@@ -753,10 +772,10 @@ async function fetchDiscountData() {
           mr={['50px', '0px']}
           mb={['50px', '0px']}
         >
-          <BlogCard />
-          <BlogCard />
-          <BlogCard />
-          <BlogCard />
+
+          {blog.length > 0 && blog.map((blog) => (
+            <BlogCard title={blog.title} key={blog.id} description={blog.description} date={blog.date}/>
+          ))}
         </Box>
       </Flex>
     </Box>

@@ -15,6 +15,7 @@ import {
 import { ChevronRightIcon } from '@chakra-ui/icons';
 import { Link } from 'react-router-dom';
 import BlogBlogCard from '../components/BlogBlogCard';
+import blog from '../components/customcomponent/blogarray';
 const Blog = () => {
     const { colorMode } = useColorMode();
   return (
@@ -62,10 +63,20 @@ const Blog = () => {
             justifyItems="center"
 
           >
+            {/* <BlogBlogCard />
             <BlogBlogCard />
             <BlogBlogCard />
-            <BlogBlogCard />
-            <BlogBlogCard />
+            <BlogBlogCard /> */}
+            {blog.map((item) => (
+              <BlogBlogCard
+
+                title={item.title}
+                description={item.description}
+                date={item.date}
+                key={item.id}
+                id={item.id}
+              />
+            ))}
           </Grid>
         </Box>
       </Box>

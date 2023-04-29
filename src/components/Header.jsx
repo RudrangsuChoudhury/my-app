@@ -123,7 +123,7 @@ const [scrollDirection, setScrollDirection] = useState(null);
     const updateScrollDirection = () => {
       const scrollY = window.pageYOffset;
       const direction = scrollY > lastScrollY ? "down" : "up";
-      if (direction !== scrollDirection && (scrollY - lastScrollY > 20 || scrollY - lastScrollY < -5)) {
+      if (direction !== scrollDirection && (scrollY - lastScrollY > 10 || scrollY - lastScrollY < -18)) {
         setScrollDirection(direction);
       }
       lastScrollY = scrollY > 0 ? scrollY : 0;
@@ -133,8 +133,10 @@ const [scrollDirection, setScrollDirection] = useState(null);
       window.removeEventListener("scroll", updateScrollDirection); // clean up
     }
   }, [scrollDirection]);
+
+console.log(cart)
   return (
-       <Box position={location.pathname==='/'?"sticky":'static'} top={0} width="100%" zIndex={1}
+       <Box position={location.pathname==='/'|| location.pathname.startsWith('/product/')?"sticky":'static'} top={0} width="100%" zIndex={1}
 
       backgroundColor= 'white'
       >
@@ -150,7 +152,8 @@ const [scrollDirection, setScrollDirection] = useState(null);
             : 'linear(to-r, #2f5cba, #8b4fc2)'
         }
 
-display={(scrollDirection  === "down" && location.pathname==='/') ? "none" : "block"}
+display={scrollDirection === "down" && (location.pathname === '/' || location.pathname.startsWith('/product/')) ? "none" : "block"}
+
 
 
       >
@@ -245,46 +248,22 @@ display={(scrollDirection  === "down" && location.pathname==='/') ? "none" : "bl
 
       <Flex
         align="center"
-        justify="center"
+     justify='space-around'
         flexDirection={['column', 'column', 'row']}
-        columnGap={['0px', '0px', '160px']}
+
         rowGap={['20px',  '0px']}
         height={['160px', '150px', '90px']}
         bgGradient={
           colorMode === 'light'
             ? 'linear(0deg, rgb(132, 110, 234) 10%, rgba(53, 34, 186, 0.64)80%)'
-            : 'linear(0deg, rgb(8, 125, 122) 13%, rgba(88, 36, 203, 0.64) 100%)'
+            : 'linear(to-l,black,black)'
         }
 
 
 min-height= '100%'
       >
-        <InputGroup w={['70%', '80%', '700px']}>
-          <Input
-            type="text"
-            placeholder="Search for products, brands and more"
-            fontSize="1em"
-            border="2px solid"
-            borderColor="gray.300"
-            height="50px"
-            focusBorderColor="gray.300"
-            _placeholder={{
-              color: '#DBEA2F',
-              fontSize: ['12px', '12px', '18px'],
-            }}
-            borderRadius="lg"
-            color={colorMode === 'light' ? 'black' : 'gray.100'}
-          />
-          <InputRightElement
-            bg="orange"
-            borderRadius={5}
-            h="49px"
-            cursor="pointer"
-            w="50px"
-            children={<BsSearch size={20} color="#913AAF" />}
-          />
-        </InputGroup>
-        <Box display="flex" columnGap="75px" flexDirection="row">
+
+
           <Link className="links" to="/compare-product">
             <Box
               as={GiScales}
@@ -344,7 +323,7 @@ min-height= '100%'
               margin="auto"
 
             />
-            <Badge fontSize='1xl' position='absolute' top='120%'>{cart.total_items}</Badge>
+            <Badge fontSize='1xl' position='absolute' top='110%'>{cart.total_items}</Badge>
           </Button>
           <Drawer
             isOpen={isCartOpen}
@@ -405,12 +384,17 @@ min-height= '100%'
                     ))}
                   </Tbody>
                 </Table>
-                <Box mt={4} ml={5}>
+                <Flex mt={4} ml={10} justify='space-between'>
                   <Text fontWeight="bold">
+                    Subtotal
                   </Text>
-                </Box>
+                  { cart.subtotal && cart.subtotal.formatted_with_symbol &&<Text ml={4} fontWeight="bold">
+                    {cart.subtotal.formatted_with_symbol}
+                  </Text>}
+                </Flex>
               </DrawerBody>
               <DrawerFooter>
+
                 <Button variant="outline" mr={3} onClick={onCartClose}>
                   Cancel
                 </Button>
@@ -420,7 +404,7 @@ min-height= '100%'
               </DrawerFooter>
             </DrawerContent>
           </Drawer>
-        </Box>
+
       </Flex>
       <Flex
         bg={colorMode === 'light' ? 'gray.100' : 'gray.700'}

@@ -1,4 +1,4 @@
-import { Box, Center, Image, Text, useColorMode,Flex,useMediaQuery } from '@chakra-ui/react';
+import { Box, Center, Image, Text, useColorMode,Flex,useMediaQuery,Tooltip} from '@chakra-ui/react';
 import React from 'react';
 import { useState } from 'react';
 import { useEffect } from 'react';
@@ -13,9 +13,16 @@ import { useSelector } from 'react-redux';
 import {useToast } from '@chakra-ui/react';
 import { addToCart } from '../reducers/cartSlice';
 import { useDispatch } from 'react-redux';
+
 import debounce from 'lodash/debounce';
+import { addToCompare } from '../reducers/compareSlice';
+import { fetchProducts } from '../reducers/productsSlice';
+import { addToWishlist } from '../reducers/wishlistSlice';
+import { Highlight } from 'react-instantsearch-hooks-web';
+
 const AnimatedBox = animated(Box);
-const ProductCard = ({gridSize,product}) => {
+const ProductCard = ({hit}) => {
+ 
 
   //handle cart
   const [isAddingToCart, setIsAddingToCart] = useState(false);
@@ -24,12 +31,13 @@ const ProductCard = ({gridSize,product}) => {
   const cart=useSelector(state=>state.cart)
 
 
+
  const toast = useToast();
   const [currentQuantity, setCurrentQuantity] = useState(0);
   useEffect(() => {
     if(!cart.line_items) return;
     // Set the current quantity of this product in the cart
-    const lineItem = cart.line_items.find((item) => item.product_id === product.id);
+    const lineItem = cart.line_items.find((item) => item.product_id === hit.id);
     if (lineItem) {
       setCurrentQuantity(lineItem.quantity);
     } else {
@@ -38,21 +46,7 @@ const ProductCard = ({gridSize,product}) => {
   }, [cart]);
 
 
-  //  const handleAddToCart = () => {
-  //   if (currentQuantity >= 10) {
-  //     toast({
-  //       title: 'Max quantity reached',
-  //       description: `You can only add up to 10 of any item to your cart.`,
-  //       status: 'warning',
-  //       duration: 2000,
-  //       isClosable: true,
-  //     });
-  //     return;
-  //   }
 
-  //   dispatch(addToCart(product.id,1));
-  //   setCurrentQuantity(prevQantity=>prevQantity+1);
-  // }
   const handleAddToCart = async () => {
     if (isAddingToCart) {
       return;
@@ -69,7 +63,7 @@ const ProductCard = ({gridSize,product}) => {
     }
     setIsAddingToCart(true);
     try {
-      await dispatch(addToCart(product.id, 1));
+      await dispatch(addToCart(hit.id, 1));
       setCurrentQuantity(currentQuantity + 1);
     } catch (error) {
       console.log(error);
@@ -79,11 +73,48 @@ const ProductCard = ({gridSize,product}) => {
 
 
 
-  // const debouncehandleAddToCart=debounce(handleAddToCart,1000)
-  //setting modile view
+// add to compare
+const compare=useSelector(state=>state.compare)
+ const handleaddtoCompare=async()=>{
+  if(compare.length>=4){
+    toast({
+      title: 'Max capacity reached',
+      description: `You can only add up to 4  item to  compare .Please remove some of them`,
+      status: 'warning',
+      duration: 3000,
+      isClosable: true,
+    });
+    return;
+  }
+    await dispatch(addToCompare(hit.id))
+
+ }
+
+
+const wishlist=useSelector(state=>state.wishlist)
+ const handleaddtoWishlist=async()=>{
+  if(wishlist.length>=4){
+    toast({
+      title: 'Max capacity reached',
+      description: `You can only add up to 4  item to  wishlist .Please remove some of them`,
+      status: 'warning',
+      duration: 3000,
+      isClosable: true,
+    });
+    return;
+  }
+    await dispatch(addToWishlist(hit.id))
+
+}
+
+
+
+
+
+
   const [isSmallerThan500] = useMediaQuery('(max-width: 500px)');
   const { colorMode } = useColorMode();
-  //image hover animation
+
   const [hovered, setHovered] = React.useState(false);
   const imageScale = useSpring({
     transform: hovered ? 'scale(1.05)' : 'scale(1)',
@@ -95,70 +126,49 @@ const ProductCard = ({gridSize,product}) => {
   let width = [];
   let height = [];
   //image size
-  if (gridSize === 4) {
-    width = '150px';
-    height = '200px';
-  } else if (gridSize === 3) {
-    width = '200px';
-    height ='300px';
-  } else if (gridSize === 2) {
-    width = isSmallerThan500 ? '100px' : '300px';
-    height = isSmallerThan500 ? '100px' : '300px';
-  }
-  else{
-       width = isSmallerThan500 ? '100px' : '200px';
+
+
+       width = isSmallerThan500 ? '100px' : '300px';
        height = isSmallerThan500 ? '100px' : '300px';
-  }
+
   //icon right position
   let iconRight;
-  if (gridSize === 4) {
-    iconRight = '12px';
-  } else if (gridSize === 3) {
-    iconRight = '8px';
-  } else if (gridSize === 2) {
-    iconRight = '24px';
-  }
-  else if(gridSize===1&&!isSmallerThan500){
-    iconRight = '70px';
+
+   if(!isSmallerThan500){
+    iconRight = '25px';
   }
   else{
-    iconRight='15px'
+    iconRight='5px'
   }
   //icons top position
   let iconTop;
-  if (gridSize === 4) {
+
+
     iconTop = '20%';
-  } else if (gridSize === 3) {
-    iconTop = '26%';
-  } else if (gridSize === 2) {
-    iconTop = '26%';
-  }
-  else{
-    iconTop = '30%';
-  }
+
   //texts rowgap
   let rowGap
-  if(gridSize===1){
+
     if(isSmallerThan500){
       rowGap='2px';
     }
     else if(!isSmallerThan500){
-      rowGap='20px';
+      rowGap='10px';
     }
-  }
+
   return (
 
     <Box
-      p={[1, 15]}
+      p={[1, '20px']}
       bg={colorMode === 'light' ? 'white' : '#087284'}
       borderRadius="10px"
       position="relative"
       overflow="hidden"
       maxHeight={['300px', '500px']}
-      maxWidth={['400px', '100%']}
+      width={['400px', '950px']}
       display="flex"
       alignItems="center"
-      justifyContent={gridSize === 1 ? 'space-between' : 'center'}
+      justifyContent= 'space-between'
       rowGap="10px"
       _hover={{
         '& .last-child': {
@@ -168,85 +178,50 @@ const ProductCard = ({gridSize,product}) => {
     >
         <Flex
           align="center"
-          rowGap={[2, 5]}
+          rowGap={[2, 20]}
           justify="center"
-          direction={gridSize === 1 ? 'row' : 'column'}
-          columnGap={gridSize === 1 ? '10px' : '0px'}
+          direction= 'row'
+          columnGap= '5px'
         >
           <Center>
             <animated.img
-              src={product.image.url}
+              src={hit.image.url}
               style={{
                 ...imageScale,
                 width: width,
                 borderRadius: '10px',
                 height: height,
-                marginRight: gridSize === 1 && !isSmallerThan500 ? '100px' : 0,
+                marginRight:  !isSmallerThan500 ? '100px' : 0,
               }}
               onMouseEnter={() => setHovered(true)}
               onMouseLeave={() => setHovered(false)}
               alt="Product"
             />
           </Center>
-          {isSmallerThan500 && gridSize === 2 && (
-            <Box
-              display="flex"
-              align="center"
-              flexDirection="row"
-              columnGap={1}
-            >
-              <Link>
-                <Box
-                  as={BsHeart}
-                  boxSize={['10px', '20px']}
-                  color={colorMode === 'light' ? 'black' : 'rgb(225, 146, 228)'}
-                />
-              </Link>
-              <Link>
-                <Box
-                  as={IoGitCompareSharp}
-                  boxSize={['10px', '20px']}
-                  color={colorMode === 'light' ? 'black' : 'rgb(50, 214, 241)'}
-                />
-              </Link>
-               <Link to={`/product/${product.id}`} >
-                <Box
-                  as={MdOutlineRemoveRedEye}
-                  boxSize={['10px', '20px']}
-                  color={colorMode === 'light' ? 'black' : 'rgb(122, 226, 138)'}
-                />
-              </Link>
 
-                <Box
-                  as={MdAddShoppingCart}
-                  boxSize={['10px', '20px']}
-                  color={colorMode === 'light' ? 'black' : 'rgb(222, 172, 77)'}
-                  onClick={handleAddToCart}
-                />
-
-            </Box>
-          )}
           <Flex
-            align={gridSize === 1 ? 'start' : 'center'}
+            align= 'start'
             justify="center"
             direction="column"
             rowGap={rowGap}
-            alignSelf={gridSize === 1 ? 'start' : 'center'}
-            px={isSmallerThan500 && gridSize === 1 ? '10px' : '0'}
+            alignSelf= 'start'
+            px={isSmallerThan500  ? '10px' : '0'}
+            w='30%'
           >
             <Text
               color={colorMode === 'light' ? '#bf4800' : '#2bcfb0'}
               fontSize={['10px', '20px']}
               fontWeight="bold"
             >
-               {product.name.split(" ")[0].toUpperCase()}
+               {hit.name.split(" ")[0].toUpperCase()}
             </Text>
             <Text color="#1c1c1b" fontSize={['8px', '14px']} fontWeight="bold">
-              {product.name}
+
+                  <Highlight attribute="name" hit={hit} />
             </Text>
             <div key={isSmallerThan500 ? 'small' : 'large'}>
               <ReactStars
-                value={Number(product.attributes[1].value)}
+                value={Number(hit.attributes[1].value)}
                 count={5}
                 size={isSmallerThan500 ? 10 : 30}
                 activeColor="#ffd700"
@@ -257,25 +232,49 @@ const ProductCard = ({gridSize,product}) => {
               color={colorMode === 'light' ? 'black' : 'white'}
               fontSize={isSmallerThan500 ? '0.5rem' : '1rem'}
             >
-              {product.price.formatted_with_symbol}
+              {hit.price.formatted_with_symbol}
             </Text>
           </Flex>
-          {(!isSmallerThan500 || (isSmallerThan500 && gridSize === 1)) && (
+
             <Box display="flex" justifyContent="flex-end" align="center">
-              <Link>
+
                 <Box
-                  as={BsHeart}
+                  as={BsHeart }
                   position="absolute"
                   top={
-                    gridSize === 4 || (gridSize === 1 && isSmallerThan500)
+                    ( isSmallerThan500)
                       ? '10%'
-                      : '20%'
+                      : '10%'
                   }
-                  left={gridSize === 4 ? '86%' : '91%'}
+                  left='95%'
                   boxSize={['10px', '20px']}
                   color={colorMode === 'light' ? 'black' : 'rgb(225, 146, 228)'}
+                  onClick={()=>handleaddtoWishlist()}
+                  cursor="pointer"
+
+ zIndex={2} // Increase zIndex value
+  _before={{
+    content: "'Add to Wishlist'",
+    position: "absolute",
+    top: "5%",
+    left: "5%",
+    transform: "translateX(-50%)",
+    backgroundColor: "black",
+    color: "white",
+    padding: "5px",
+    borderRadius: "5px",
+    opacity: 0,
+    transition: "opacity 0.3s ease-in-out",
+    zIndex: 3, // Increase zIndex value
+  }}
+  _hover={{
+    _before: {
+      opacity: 1,
+    }
+  }}
                 />
-              </Link>
+
+
               <Box
                 position="absolute"
                 top={iconTop}
@@ -284,24 +283,28 @@ const ProductCard = ({gridSize,product}) => {
                 flexDirection="column"
                 rowGap={5}
                 className="last-child"
-                transition=".3s"
+                transition=".5s"
               >
-                <Link>
+
                   <Box
                     as={IoGitCompareSharp}
                     boxSize={['10px', '20px']}
                     color={
                       colorMode === 'light' ? 'black' : 'rgb(50, 214, 241)'
+
                     }
+                    cursor='pointer'
+                           onClick={()=>handleaddtoCompare()}
                   />
-                </Link>
-               <Link to={`/product/${product.id}`} >
+
+               <Link to={`/product/${hit.id}`}>
                   <Box
                     as={MdOutlineRemoveRedEye}
                     boxSize={['10px', '20px']}
                     color={
                       colorMode === 'light' ? 'black' : 'rgb(122, 226, 138)'
                     }
+
                   />
                 </Link>
 
@@ -319,7 +322,7 @@ const ProductCard = ({gridSize,product}) => {
 
               </Box>
             </Box>
-          )}
+
         </Flex>
     </Box>
 

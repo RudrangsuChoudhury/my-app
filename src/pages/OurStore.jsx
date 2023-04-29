@@ -48,6 +48,10 @@ import {
   Spinner,
   CircularProgress,
   Heading,
+  Input,
+  InputGroup,
+ InputRightElement,
+  IconButton,
 } from '@chakra-ui/react';
 import { Link } from 'react-router-dom';
 import Sortmenuitem from '../components/Sortmenuitem';
@@ -56,6 +60,7 @@ import {
   BsGrid3X3Gap,
   BsGridFill,
   BsGrid3X3GapFill,
+  BsSearch
 } from 'react-icons/bs';
 import ProductCard from '../components/ProductCard';
 import { TfiLayoutGrid4, TfiLayoutGrid4Alt } from 'react-icons/tfi';
@@ -63,42 +68,61 @@ import { useDispatch, useSelector } from 'react-redux';
 import { fetchProducts, getIsFetching  } from '../reducers/productsSlice';
 import { fetchCart } from '../reducers/cartSlice';
 import { addToCart } from '../reducers/cartSlice';
+//importing algolia search
+
+
+
+
+import Search from '../components/Search';
+import ListProduct from '../components/ListProduct';
+import { handleSort } from '../reducers/sortSlice';
+//refinelist
+import { RefinementList } from 'react-instantsearch-hooks-web';
+import algoliasearch from 'algoliasearch/lite';
+import { InstantSearch} from 'react-instantsearch-hooks-web';
+
+
+
 const OurStore = () => {
-  //filtering by category from header menu
-  //  const location = useLocation();
-  // const searchParams = new URLSearchParams(location.search);
-  // const category1 = searchParams.get('category');
 
 
 
 
 const dispatch = useDispatch();
   const isProductsFetching = useSelector(getIsFetching);
-;
+// ;
   const products = useSelector((state) => state.products.products);
   let arr = [];
+
+
 while (arr.length < 2) {
-  let random_index = Math.floor(Math.random() * products.length);
+  let random_index = Math.floor(Math.random() * 13);
   if (!arr.includes(random_index)) {
     arr.push(random_index);
   }
 }
+
+
+
+
+
+
 useEffect(() => {
       dispatch(fetchProducts());
     dispatch(fetchCart());
   },[]);
+
+
 const [selectedOption, setSelectedOption] = useState('Featured');
-  const [selectedColor, setSelectedColor] = useState(null);
-  const [hasFilter, setHasFilter] = useState(false);
 
- const [displayedProducts, setDisplayedProducts] = useState([]);
 
-  const [category, setCategory] = useState(null);
+const [category, setCategory] = useState('');
   const { colorMode, toggleColorMode } = useColorMode();
   const { isOpen, onOpen, onClose } = useDisclosure();
-  //slider
-  const [sliderValue, setSliderValue] = React.useState([1000,150000]);
-  const [showTooltip, setShowTooltip] = React.useState(false);
+//   //slider
+
+  const sort=useSelector((state)=>state.sort);
+
   //category
 
 
@@ -110,45 +134,43 @@ const [selectedOption, setSelectedOption] = useState('Featured');
     'Z-A': false,
     'High to Low': false,
     'Low to High': false,
-    'Old to New': false,
-    'New to Old': false,
+
   });
    const handleOptionSelect = (option) => {
      setSelectedOption(option);
    };
-   //sorting products
-      useEffect(() => {
-    if (products.length > 0) {
 
 
-      setDisplayedProducts(products);
-    }
-  }, [products]);
-  console.log(products);
+
 
 
 
      const handleMenuItemClick = (option) => {
-        let sorted = [...displayedProducts];
+
 
   if (option === 'Featured') {
-    sorted=products;
+   dispatch(handleSort('products'));
 
   } else if (option === 'Rating') {
-    sorted.sort((a, b) => b.attributes[1].value - a.attributes[1].value);
+
+    dispatch(handleSort('Rating'));
   } else if(option === 'A-Z') {
-    sorted.sort((a, b) => a.name.localeCompare(b.name));
+
+    dispatch(handleSort('Alphabetical_Ascending'))
   } else if(option === 'Z-A') {
-    sorted.sort((a, b) => b.name.localeCompare(a.name));
+
+    dispatch(handleSort('Alphabetical_Descending'));
   } else if(option === 'High to Low') {
-    sorted.sort((a, b) => b.price.raw - a.price.raw);
+
+   dispatch( handleSort('Price'));
   } else if(option === 'Low to High') {
-    sorted.sort((a, b) => a.price.raw - b.price.raw);
+
+    dispatch(handleSort('Price_Ascending'));
   }
 
 
 
-  setDisplayedProducts(sorted);
+
        let category = '';
        if (option === 'Featured' || option === 'Rating') {
          category = 'Sorted by : ';
@@ -156,8 +178,6 @@ const [selectedOption, setSelectedOption] = useState('Featured');
          category = 'Sorted alphabetically : ';
        } else if (option === 'High to Low' || option === 'Low to High') {
          category = 'Sorted by price : ';
-       } else if (option === 'Old to New' || option === 'New to Old') {
-         category = 'Sorted by date : ';
        }
        // Set the menu group title with the sorting category and option
        setMenuGroupTitle(`${category} ${option}`);
@@ -180,57 +200,7 @@ const [selectedOption, setSelectedOption] = useState('Featured');
 //filtering by price
 
 
-const handleFilter = (filterType, filterValue) => {
 
-  let filtered = displayedProducts;
-
-  if (filterType === 'color') {
-    setSelectedColor(filterValue);
-  } else if (filterType === 'price') {
-    setSliderValue(filterValue);
-  }
-  else if(filterType==='category'){
-     setCategory(filterValue)
-  }
-
-
-  // check if any filter is applied
-  const hasColorFilter = selectedColor !== null;
-  const hasPriceFilter = sliderValue[0] !== 1000 || sliderValue[1] !== 150000;
-  const hasCategoryFilter=category!==null
-  const hasFilter = hasColorFilter || hasPriceFilter||hasCategoryFilter;
-
-  setHasFilter(hasFilter);
-
-  // filter the products based on the selected color and price range
-  if (hasFilter) {
-    filtered = products.filter((product) => {
-      let matchColor = true;
-      let matchPrice = true;
-      let matchCategory=true;
-
-      if (hasColorFilter) {
-        matchColor = product.attributes[0].value.includes(filterValue);
-      }
-
-      if (hasPriceFilter) {
-        matchPrice = product.price.raw >= filterValue[0] && product.price.raw <= filterValue[1];
-      }
-      if(hasCategoryFilter){
-        matchCategory=product.categories[0].name===filterValue
-      }
-
-
-      return matchColor && matchPrice && matchCategory;
-    });
-  }
-
-  // sort the products based on the selected sorting option
-
-
-  setDisplayedProducts(filtered);
-
-};
 
 
 
@@ -242,18 +212,14 @@ const handleFilter = (filterType, filterValue) => {
      const [menuGroupTitle, setMenuGroupTitle] = useState(
        `Sorted by : ${'Featured'}`
      );
-      //Setting ou r products grid arrangement
-      const [grid, setGrid] = useState(3);
-      const changeGrid = (i) => {
-        setGrid(i);
-      };
-        // setting grid option for mobile
-        const [isSmallerThanMd] = useMediaQuery('(max-width: 500px)');
-         useEffect(() => {
-           if (isSmallerThanMd) {
-             setGrid(2);
-           }
-         }, [isSmallerThanMd]);
+
+
+
+
+
+
+
+
   return (
     <>
       <Meta title={'Our Store'} />
@@ -274,238 +240,29 @@ const handleFilter = (filterType, filterValue) => {
           </BreadcrumbLink>
         </BreadcrumbItem>
       </Breadcrumb>
+      <Flex direction='column' justify='center' align='center' >
+
+
+
       <Box
         display="flex"
         bgColor={colorMode === 'light' ? 'gray.300' : '#363e47'}
         py={[5, 50]}
         px={[5, 100]}
         gap={[5, 10]}
+
       >
+
+
         <Flex
           bgColor={colorMode === 'light' ? 'gray.300' : '#363e47'}
           direction="column"
           rowGap={30}
+
         >
-          <Flex
-            bg={colorMode === 'light' ? 'white' : '#5E565E'}
-            p={[1, 10]}
-            width={[100, 300]}
-            borderRadius="10px"
-            padding="10px 15px"
-            direction={'column'}
-            rowGap="10px"
-          >
-            <Text
-              fontSize={['8px', '16px']}
-              lineHeight={['10px', '20px']}
-              fontWeight={600}
-              color={colorMode === 'light' ? 'black' : 'rgb(125 238 196 / 92%)'}
-            >
-              Shop by Categories
-            </Text>
-            <List
-              lineHeight={['15px', '30px']}
-              color={colorMode === 'light' ? 'black' : 'rgb(125 238 196 / 92%)'}
-              fontWeight="bold"
-              cursor="pointer"
-            >
-              <ListItem fontSize={[10, 15]} onClick={()=>handleFilter('category','Watch')}>⌚Watch</ListItem>
-              <ListItem fontSize={[10, 15]} onClick={()=>handleFilter('category',"Smartphone")}>📱Smartphone</ListItem>
-              <ListItem fontSize={[10, 15]} onClick={()=>handleFilter('category',"Headphones")}>🎧Headphone</ListItem>
-              <ListItem fontSize={[10, 15]} onClick={()=>handleFilter('category',"Laptops")}>💻Laptop</ListItem>
-              <ListItem fontSize={[10, 15]} onClick={()=>handleFilter('category',"Tablets")}>Tablets</ListItem>
-              <ListItem fontSize={[10, 15]} onClick={()=>handleFilter('category',"Gaming Console")}>Gaming Console</ListItem>
-              <ListItem fontSize={[10, 15]} onClick={()=>handleFilter('category',"Portable Speaker")}>🔊Portable Speaker</ListItem>
-            </List>
-          </Flex>
-          <Flex
-            p={[1, 10]}
-            width={[100, 300]}
-            bg={colorMode === 'light' ? 'white' : '#5E565E'}
-            borderRadius="10px"
-            padding="10px 15px"
-            direction="column"
-            rowGap={[1, 5]}
-          >
-            <Flex align='center' justify='space-between'>
-            <Text
-              fontSize={['10px', '16px']}
-              lineHeight={['10px', '20px']}
-              fontWeight={600}
-              color={colorMode === 'light' ? 'black' : 'rgb(125 238 196 / 92%)'}
-            >
-              Filter By
-            </Text>
-           {hasFilter &&<Button size='sm' leftIcon={<CloseIcon boxSize={2}/>} colorScheme='pink' variant='outline'
-           onClick={() => {
-             setHasFilter(false);
-      setSelectedColor(null);
-       setSliderValue([1000, 150000]);
-       setCategory(null)
-          setDisplayedProducts(products);
 
-        }}>
-    Clear Filter
-  </Button>}
-            </Flex>
-            <Text
-              fontWeight={600}
-              color={colorMode === 'light' ? 'black' : 'rgb(125 238 196 / 92%)'}
-              fontSize={['10px', '14px']}
-            >
-              Price
-            </Text>
 
-            <RangeSlider
-              aria-label="RangeSlider-ex-4"
-              defaultValue={[1000, 150000]}
-              min={1000}
-              max={150000}
-              onChange={(v) => setSliderValue(v)}
-              onMouseEnter={() => setShowTooltip(true)}
-              onMouseLeave={() => setShowTooltip(false)}
-              step={1000}
-              onChangeEnd={(v) => {
-                handleFilter('price', v);
-              }}
-              value={sliderValue}
-            >
-              <RangeSliderMark
-                value={1000}
-                mt={['1px', '5px']}
-                ml={['-1px', '-15px']}
-                fontSize={['6px', '12px']}
-              >
-                1000
-              </RangeSliderMark>
-              <RangeSliderMark
-                value={45000}
-                mt={['1px', '5px']}
-                ml={['-1px', '-20px']}
-                fontSize={['6px', '12px']}
-              >
-                45000
-              </RangeSliderMark>
-              <RangeSliderMark
-                value={75000}
-                mt={['1px', '5px']}
-                ml={['-1px', '-20px']}
-                fontSize={['6px', '12px']}
-              >
-               75000
-              </RangeSliderMark>
-              <RangeSliderMark
-                value={110000}
-                mt={['1px', '5px']}
-                ml={['-1px', '-20px']}
-                fontSize={['6px', '12px']}
-              >
-               110000
-              </RangeSliderMark>
-              <RangeSliderMark
-                value={150000}
-                mt={['1px', '5px']}
-                ml={['-1px', '-20px']}
-                fontSize={['6px', '12px']}
-              >
-               150000
-              </RangeSliderMark>
-              <RangeSliderTrack bg="#B1B0D5">
-                <RangeSliderFilledTrack bg="#4eb64f" />
-              </RangeSliderTrack>
-              <Tooltip
-                hasArrow
-                bg="green.500"
-                color="white"
-                placement="top"
-                isOpen={showTooltip}
-                label={`${sliderValue[0]}₹`}
-                width={['32px', 47]}
-                height={['15px', 41]}
-                textAlign="center"
-                fontSize={['8px', '10px']}
-                p={0}
-              >
-                <RangeSliderThumb index={0} boxSize={[2, 3]} />
-              </Tooltip>
-              <Tooltip
-                hasArrow
-                bg="green.500"
-                color="white"
-                placement="top"
-                isOpen={showTooltip}
-                label={`${sliderValue[1]}₹`}
-                width={['32px', 47]}
-                height={['15px', 41]}
-                textAlign="center"
-                fontSize={['8px', '10px']}
-                 p={0}
-              >
-                <RangeSliderThumb index={1} boxSize={[2, 3]} />
-              </Tooltip>
-            </RangeSlider>
-            {/* Rangeslider part ends */}
-            <Text
-              fontWeight={600}
-              color={colorMode === 'light' ? 'black' : 'rgb(125 238 196 / 92%)'}
-              fontSize={['10px', '14px']}
-            >
-              Colors
-            </Text>
-            <Flex>
-             <List display="flex" flexWrap="wrap" gap="10px">
-  <Color color="Black"  onMouseDown={() => handleFilter('color','Black')} selectedColor={selectedColor}/>
-  <Color color="#f5f3f3"  onMouseDown={() => handleFilter('color','#f5f3f3')} selectedColor={selectedColor}/>
-  <Color color="Silver"  onMouseDown={() => handleFilter('color','Silver')} selectedColor={selectedColor}/>
-  <Color color="Grey"  onMouseDown={() => handleFilter('color','Grey')} selectedColor={selectedColor}/>
-  <Color color="Beige"  onMouseDown={() => handleFilter('color','Beige')} selectedColor={selectedColor}/>
-  <Color color="Red" onMouseDown={() => handleFilter('color','Red')} selectedColor={selectedColor}/>
-</List>
 
-        </Flex>
-            <Text
-              fontWeight={600}
-              color={colorMode === 'light' ? 'black' : 'rgb(125 238 196 / 92%)'}
-              fontSize={['10px', '14px']}
-            >
-              Size
-            </Text>
-            <Stack spacing={[2, 4]}>
-              <CheckboxGroup
-                colorScheme={colorMode === 'light' ? 'green' : 'telegram'}
-                size="xl"
-              >
-                <Checkbox
-                  fontWeight="bold"
-                  variant="rounded"
-                  size={['sm', 'lg']}
-                >
-                  <Text
-                    fontSize={['8px', '12px']}
-                    color={
-                      colorMode === 'light' ? 'black' : 'rgb(125 238 196 / 92%)'
-                    }
-                  >
-                    S (2)
-                  </Text>
-                </Checkbox>
-                <Checkbox
-                  fontWeight="bold"
-                  variant="rounded"
-                  size={['sm', 'lg']}
-                >
-                  <Text
-                    fontSize={['8px', '12px']}
-                    color={
-                      colorMode === 'light' ? 'black' : 'rgb(125 238 196 / 92%)'
-                    }
-                  >
-                    M (2)
-                  </Text>
-                </Checkbox>
-              </CheckboxGroup>
-            </Stack>
-          </Flex>
           <Flex
             width={[100, 300]}
             bg={colorMode === 'light' ? 'white' : '#5E565E'}
@@ -593,7 +350,9 @@ const handleFilter = (filterType, filterValue) => {
             >
               Random Product
             </Text>
+            {products.length>0 &&
             <Flex direction="column" py={[1, 5]}>
+              <Link to={`/product/${products[arr[0]].id}`}>
               <Flex
                 borderBottom="2px solid #ededed"
                 pb={[5, 10]}
@@ -602,11 +361,13 @@ const handleFilter = (filterType, filterValue) => {
                   colorMode === 'light' ? 'black' : 'rgb(125 238 196 / 92%)'
                 }
                 direction={['column', 'row']}
+
               >
                 <Image
                   src={products[arr[0]].image.url}
                   width={[100, 150]}
                   height={[100, 200]}
+
                 />
                 <Flex direction="column" justify="center" rowGap={[1, 5]}>
                   <Text
@@ -628,6 +389,8 @@ const handleFilter = (filterType, filterValue) => {
                   </Text>
                 </Flex>
               </Flex>
+              </Link>
+              <Link to={`/product/${products[arr[1]].id}`}>
               <Flex
                 mt={[5, 10]}
                 columnGap={[0, 5]}
@@ -661,7 +424,9 @@ const handleFilter = (filterType, filterValue) => {
                   </Text>
                 </Flex>
               </Flex>
+              </Link>
             </Flex>
+}
           </Flex>
         </Flex>
         <Flex direction="column">
@@ -724,118 +489,47 @@ const handleFilter = (filterType, filterValue) => {
                     iconVisible={iconVisible['Low to High']}
                   />
                 </MenuGroup>
-                <MenuGroup title="Date:" fontSize={['10px', '12px']}>
-                  <Sortmenuitem
-                    bg={colorMode === 'light' ? '#aed0d0' : 'cyan.700'}
-                    text="Old to New"
-                    onClick={() => handleMenuItemClick('Old to New')}
-                    iconVisible={iconVisible['Old to New']}
-                  />
-                  <Sortmenuitem
-                    bg={colorMode === 'light' ? '#aed0d0' : 'cyan.700'}
-                    text="New to Old"
-                    onClick={() => handleMenuItemClick('New to Old')}
-                    iconVisible={iconVisible['New to Old']}
-                  />
-                </MenuGroup>
+
               </MenuList>
             </Menu>
-           {category&& <Text fontSize='20px' fontWeight='bold'
-           color={colorMode==='light'?'black':"#b0ffe4"}>Category : {category}</Text>}
+
             <Flex align="center" columnGap={['5px', '10px']}>
               <Text
                 color={colorMode === 'light' ? 'black' : '#b5b542'}
                 fontSize={['10px', '16px']}
               >
-                12 Products
+                {products.length} Products
               </Text>
-              <Flex columnGap={['5px', '10px']}>
-                <Center
-                  bgColor={colorMode === 'light' ? 'gray.300' : '#956124'}
-                  borderRadius={['5px', '10px']}
-                  p={['4px', '5px']}
-                  onClick={() => {
-                    changeGrid(1);
-                  }}
-                >
-                  <Box
-                    as={
-                      grid === 1
-                        ? FilledTextColumnOneWide
-                        : RegularTextColumnOneWide
-                    }
-                    boxSize={['12px', '20px']}
-                  ></Box>
-                </Center>
-                <Center
-                  bgColor={colorMode === 'light' ? 'gray.300' : '#956124'}
-                  borderRadius={['5px', '10px']}
-                  p={['4px', '5px']}
-                  onClick={() => {
-                    changeGrid(2);
-                  }}
-                >
-                  <Box
-                    as={grid === 2 ? BsGridFill : BsGrid}
-                    boxSize={['12px', '20px']}
-                  ></Box>
-                </Center>
-                {!isSmallerThanMd && (
-                  <>
-                    <Box
-                  bgColor={colorMode === 'light' ? 'gray.300' : '#956124'}
-                  borderRadius={['5px', '10px']}
-                  p={['4px', '5px']}
-                  onClick={() => {
-                    changeGrid(3);
-                  }}
-                >
-                  <Box
-                    as={grid === 3 ? BsGrid3X3GapFill : BsGrid3X3Gap}
-                    boxSize={['12px', '20px']}
-                  ></Box>
-                </Box>
-                  <Box
-                    bgColor={colorMode === 'light' ? 'gray.300' : '#956124'}
-                    borderRadius={['5px', '10px']}
-                    p={['4px', '5px']}
-                    onClick={() => {
-                      changeGrid(4);
-                    }}
-                  >
-                    <Box
-                      as={grid === 4 ? TfiLayoutGrid4Alt : TfiLayoutGrid4}
-                      boxSize={['12px', '20px']}
-                    ></Box>
-                  </Box>
-                  </>
-                )}
-              </Flex>
+
             </Flex>
           </Flex>
- {isProductsFetching ? (
+           {isProductsFetching ? (
   <Center mt='50px'  >
-   {/* <CircularProgress trackColor='teal' mt={100} isIndeterminate size="100px" color="green.500" thickness="10px" /> */}
-   <Image src={GIF} alt="Waiting" w="80%" h="80%" border='10px solid green'/>
-   {/* <div class="tenor-gif-embed" data-postid="16962141" data-share-method="host" data-aspect-ratio="1.77778" data-width="100%"><a href="https://tenor.com/view/mr-bean-mr-bean-bored-waiting-gif-16962141">Mr Bean Mr GIF</a>from <a href="https://tenor.com/search/mr+bean-gifs">Mr Bean GIFs</a></div> <script type="text/javascript" async src="https://tenor.com/embed.js"></script> */}
-   </Center>
+    <CircularProgress trackColor='teal' mt={100} isIndeterminate size="100px" color="green.500" thickness="10px" />
+
+
+    </Center>
  ) : (
     <>
-      {!hasFilter ||displayedProducts.length>0 ? (
-        <Grid templateColumns={`repeat(${grid}, 1fr)`} gap={6} py={10}>
-          {displayedProducts && displayedProducts.map((product) => (
+
+       <Box mt='20px' >
+          {/* {displayedProducts && displayedProducts.map((product) => (
             <ProductCard key={product.id} gridSize={grid} product={product} />
-          ))}
-        </Grid>
-      ) : (
-        <Box textAlign="center" py={10}>
-          <Heading variant="h5">No Products Found</Heading>
-        </Box>
-      )}
+
+          ))} */}
+           {products && <ListProduct
+
+        />}
+           </Box>
+
+
     </>
   )}
+
         </Flex>
       </Box>
+      </Flex>
+
     </>
   );
 };

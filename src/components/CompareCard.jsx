@@ -3,11 +3,21 @@ import { Flex,Image,Box,Text,useColorMode } from '@chakra-ui/react'
 import Color from './Color'
 import { RxCross1 } from 'react-icons/rx';
 
+import { removeFromCompare } from '../reducers/compareSlice';
+import { useDispatch } from 'react-redux';
+import ReactStars from 'react-rating-stars-component';
+
 
 const CompareCard = (props) => {
     const { colorMode } = useColorMode();
     const str = props.color;
 const strArr = str.split(' ');
+const dispatch = useDispatch();
+
+const handleRemove = () => {
+
+  dispatch(removeFromCompare(props.id))
+}
   return (
     <Flex
           px="20px"
@@ -39,6 +49,7 @@ const strArr = str.split(' ');
             position="absolute"
             top="2%"
             left="83%"
+            onClick={()=>handleRemove()}
           />
           <Text
             color="1c1c1b"
@@ -72,6 +83,23 @@ const strArr = str.split(' ');
             >
                 <Text fontWeight='bold'>Type</Text>
                 <Text>{props.Type}</Text>
+            </Flex>
+            <Flex
+              justify="space-between"
+              align="center"
+              p="10px 0px"
+               w='100%'
+              borderTop="1px solid rgba(0,0,0,0.1)"
+            >
+               <Text fontWeight='bold'>Rating</Text>
+               <ReactStars
+                count={5}
+                size={24}
+                activeColor="#ffd700"
+                value={props.rating}
+                isHalf={true}
+                edit={false}
+              />
             </Flex>
 
             <Flex
