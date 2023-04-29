@@ -187,7 +187,7 @@ display={scrollDirection === "down" && (location.pathname === '/' || location.pa
               fontWeight={1000}
               fontFamily="Calligraffitti"
             >
-              <Link>The Student's Marketplace</Link>
+              <Link>The Student's Marketplacecdc</Link>
             </Text>
             <Text
               fontSize={['0.7em','0.7em',"1xl"]}
