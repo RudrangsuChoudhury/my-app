@@ -52,6 +52,7 @@ import {
   InputGroup,
  InputRightElement,
   IconButton,
+
 } from '@chakra-ui/react';
 import { Link } from 'react-router-dom';
 import Sortmenuitem from '../components/Sortmenuitem';
@@ -60,7 +61,8 @@ import {
   BsGrid3X3Gap,
   BsGridFill,
   BsGrid3X3GapFill,
-  BsSearch
+  BsSearch,
+
 } from 'react-icons/bs';
 import ProductCard from '../components/ProductCard';
 import { TfiLayoutGrid4, TfiLayoutGrid4Alt } from 'react-icons/tfi';
@@ -213,6 +215,7 @@ const [category, setCategory] = useState('');
        `Sorted by : ${'Featured'}`
      );
 
+  const [isSmallerThan500] = useMediaQuery('(max-width: 500px)');
 
 
 
@@ -240,7 +243,7 @@ const [category, setCategory] = useState('');
           </BreadcrumbLink>
         </BreadcrumbItem>
       </Breadcrumb>
-      <Flex direction='column' justify='center' align='center' >
+
 
 
 
@@ -250,24 +253,35 @@ const [category, setCategory] = useState('');
         py={[5, 50]}
         px={[5, 100]}
         gap={[5, 10]}
+        justifyContent={['start', 'space-between']}
+        flexDirection={['column', 'row']}
+
+        // flexDirection={['column', 'row']}
 
       >
 
 
         <Flex
           bgColor={colorMode === 'light' ? 'gray.300' : '#363e47'}
-          direction="column"
+          direction={['row',"column"]}
           rowGap={30}
+          justify={['space-around', 'flex-start']}
+          width={['100%', '20%']}
+
+
+
 
         >
 
 
 
           <Flex
-            width={[100, 300]}
+            width={['100px', 300]}
             bg={colorMode === 'light' ? 'white' : '#5E565E'}
             borderRadius="10px"
             padding={['5px 5px', '10px 15px']}
+            height="fit-content"
+            display={isSmallerThan500? 'none' : 'visible'}
           >
             <Flex direction="column">
               <Text
@@ -334,33 +348,40 @@ const [category, setCategory] = useState('');
             </Flex>
           </Flex>
           <Flex
-            width={[100, 300]}
+            width={['100%', 300]}
             bg={colorMode === 'light' ? 'white' : '#5E565E'}
             justify="center"
             borderRadius="10px"
             padding={['10px 5px', '10px 15px']}
             direction="column"
+                  height="fit-content"
+                  textAlign='center'
           >
             <Text
               fontSize={['10px', '16px']}
               lineHeight={['10px', '20px']}
               fontWeight={600}
               color={colorMode === 'light' ? 'black' : 'rgb(125 238 196 / 92%)'}
-              mb={['5px', '20px']}
+              mb={['0px', '20px']}
+
             >
               Random Product
             </Text>
             {products.length>0 &&
-            <Flex direction="column" py={[1, 5]}>
+            <Flex direction={['row',"column"]} py={[1, 5]} gap={[10,0]}
+            align='center'
+            justify={['center','start']}>
               <Link to={`/product/${products[arr[0]].id}`}>
               <Flex
-                borderBottom="2px solid #ededed"
-                pb={[5, 10]}
+                borderBottom={isSmallerThan500?'none':"2px solid #ededed"}
+                pb={[0, 10]}
                 columnGap={[0, 5]}
+                px={[10,0]}
                 color={
                   colorMode === 'light' ? 'black' : 'rgb(125 238 196 / 92%)'
                 }
                 direction={['column', 'row']}
+                align='center'
 
               >
                 <Image
@@ -369,7 +390,8 @@ const [category, setCategory] = useState('');
                   height={[100, 200]}
 
                 />
-                <Flex direction="column" justify="center" rowGap={[1, 5]}>
+                <Flex direction="column" justify="center" rowGap={[1, 5]}
+                align='center'>
                   <Text
                     fontWeight="bold"
                     fontSize={['10px', '13px']}
@@ -431,12 +453,12 @@ const [category, setCategory] = useState('');
         </Flex>
         <Flex direction="column">
           <Flex
-            p={['5px', 10]}
+            p={['20px', 10]}
             bgColor={colorMode === 'light' ? 'white' : '#247368'}
             h={'70px'}
             borderRadius="10px"
             boxShadow="md"
-            width={['278px', '1000px']}
+            width={['400px', '1000px']}
             justify="space-between"
             align="center"
           >
@@ -512,14 +534,9 @@ const [category, setCategory] = useState('');
  ) : (
     <>
 
-       <Box mt='20px' >
-          {/* {displayedProducts && displayedProducts.map((product) => (
-            <ProductCard key={product.id} gridSize={grid} product={product} />
+       <Box mt='20px' w={['100%','100%']}>
 
-          ))} */}
-           {products && <ListProduct
-
-        />}
+           {products && <ListProduct/>}
            </Box>
 
 
@@ -528,7 +545,7 @@ const [category, setCategory] = useState('');
 
         </Flex>
       </Box>
-      </Flex>
+
 
     </>
   );

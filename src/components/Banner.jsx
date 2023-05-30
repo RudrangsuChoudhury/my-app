@@ -3,7 +3,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 const Banner = (props) => {
   return (
-    <div  >
+    <div style={{display:'flex',alignItems:'center'}} >
       <Image  src={props.src} h={props.h} w={props.w} borderRadius={20} bgColor='blackAlpha.400'/>
 
       <Text

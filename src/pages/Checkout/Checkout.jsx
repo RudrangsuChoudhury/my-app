@@ -81,7 +81,7 @@ let Confirmation=()=>order.customer ?(
 
   </div>
   <br/>
-  <Button component={Link} to="/" variant="outlined" type="button">Back to Home</Button>
+  <Button component={Link} to="/ourstore" variant="outlined" type="button">Back to Ourstore</Button>
 
   </>
 
@@ -106,7 +106,7 @@ useEffect(()=>{
       const token=await commerce.checkout.generateToken(cart.id,{type:'cart'})
 
       setCheckoutToken(token)
-      console.log(token)
+
     }catch(error){
 
       navigate('/')
@@ -146,7 +146,7 @@ checkoutToken={checkoutToken}
       const token=await commerce.checkout.checkDiscount(checkoutToken.id,{code:code})
 
       setCheckoutToken(token)
-      console.log(token)
+
          }
     catch(error){
       toast({

@@ -40,7 +40,7 @@
 }
 @media (max-width: 480px) {
   .product-card:hover .product-card_hover {
-    right: 8px;
+    right: 13px;
   }
 }
 .wishlist{

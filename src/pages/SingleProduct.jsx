@@ -174,17 +174,7 @@ const wishlist=useSelector(state=>state.wishlist)
 
 }
 
-const handlesetShowReviewForm=()=>{
-  setShowReviewForm(!showReviewForm)
-   toast({
-        title: 'Thanks 😀',
-        description: `Thanks For Your Review`,
-        status: 'success',
-        duration: 3000,
-        isClosable: true,
-      });
 
-}
 const review=useSelector(state=>state.review)
 const [review1,setReview1]=useState('')
 
@@ -192,13 +182,15 @@ const [review1,setReview1]=useState('')
  const[main_review,setMain_review]=useState('')
 const [reviewProduct,setReviewProduct]=useState([])
 useEffect(() => {
-  if (review.length > 0) {
+  // if (review.length > 0) {
+
     const filteredReview = review.filter((review) => review.id === id);
+
     setReviewProduct(filteredReview);
     if (filteredReview.length > 0) {
       setMain_review(filteredReview[0].attributes[5].value);
     }
-  }
+  // }
 }, [id, review]);
 
 const handleAddReview=async(review2,id1)=>{
@@ -211,7 +203,7 @@ const handleAddReview=async(review2,id1)=>{
   await dispatch(addToReview(id1,review2))
   setShowReviewForm(false)
 
- 
+
 
 
   // const review3=reviewProduct[0].attributes[5].value
@@ -476,10 +468,7 @@ const handleAddReview=async(review2,id1)=>{
               >
                 Write a review
               </Button>
-          {/* <Avatar>
-    <AvatarBadge boxSize='1.25em' bg='green.500' />
-  </Avatar> */}
-  {/* cdcdc */}
+
 
             </Flex>
           </Flex>

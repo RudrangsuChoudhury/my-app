@@ -4,13 +4,12 @@ import {Elements,CardElement,ElementsConsumer} from '@stripe/react-stripe-js'
 import {loadStripe} from '@stripe/stripe-js'
 import Review from './Review'
 import { useDispatch } from 'react-redux'
-
-import { Flex} from '@chakra-ui/react'
-
-
+import { Flex,useToast} from '@chakra-ui/react'
 const stripePromise = loadStripe(import.meta.env.VITE_Stripe_public_key)
 const PaymentForm = ({checkoutToken,backStep,handleCaptureCheckout,shippingData,nextStep,timeOut,ApplyCode}) => {
   const dispatch=useDispatch()
+  const toast=useToast()
+
   const handleSubmit=async(event,elements,stripe)=>{
     event.preventDefault()
     if(!stripe || !elements) return
@@ -18,6 +17,14 @@ const PaymentForm = ({checkoutToken,backStep,handleCaptureCheckout,shippingData,
     const {error,paymentMethod}=await stripe.createPaymentMethod({type:'card',card:cardElement})
     if(error){
       console.log(error)
+      toast({
+        title: error.type,
+        description: error.message,
+        status: "error",
+        duration: 9000,
+        isClosable: true,
+      })
+
     }else{
       const orderData={
         line_items:checkoutToken.line_items,
@@ -40,7 +47,6 @@ const PaymentForm = ({checkoutToken,backStep,handleCaptureCheckout,shippingData,
       dispatch(handleCaptureCheckout(checkoutToken.id,orderData))
       timeOut()
       nextStep()
-
     }
   }
   return (
@@ -48,7 +54,6 @@ const PaymentForm = ({checkoutToken,backStep,handleCaptureCheckout,shippingData,
     <Review checkoutToken={checkoutToken} ApplyCode={ApplyCode}/>
     <Divider/>
     <Typography variant="h6" gutterBottom style={{margin:'20px 0'}}>Payment Method</Typography>
-
     <Elements stripe={stripePromise}>
       <ElementsConsumer>
         {({elements,stripe})=>(
@@ -61,7 +66,6 @@ const PaymentForm = ({checkoutToken,backStep,handleCaptureCheckout,shippingData,
             <Typography color='grey'>Hint:242</Typography>
             <Typography color='grey'>Hint:42424</Typography>
             </Flex>
-
             </Flex>
             <br/><br/>
             <div style={{display:'flex',justifyContent:'space-between'}}>
@@ -77,5 +81,4 @@ const PaymentForm = ({checkoutToken,backStep,handleCaptureCheckout,shippingData,
     </>
   )
 }
-
 export default PaymentForm

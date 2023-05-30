@@ -108,7 +108,7 @@ const wishlist=useSelector(state=>state.wishlist)
       overflow="hidden"
       className="product-card"
       height={['500px', '560px']}
-      minW="246px"
+      minW={['200px',"246px"]}
     >
       <Box display="flex" flexDirection="column" rowGap={[2, 7]}>
 

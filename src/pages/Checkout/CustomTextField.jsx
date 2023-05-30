@@ -9,9 +9,9 @@ const FormInput = ({name,label}) => {
 
         // control={control}
         // fullWidth
-        // name={name}
+
         // label={label}
-        // required={required}
+       
         defaultValue=""
 
     control={control}

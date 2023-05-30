@@ -134,7 +134,7 @@ const [scrollDirection, setScrollDirection] = useState(null);
     }
   }, [scrollDirection]);
 
-console.log(cart)
+
   return (
        <Box position={location.pathname==='/'|| location.pathname.startsWith('/product/')?"sticky":'static'} top={0} width="100%" zIndex={1}
 
@@ -249,10 +249,11 @@ display={scrollDirection === "down" && (location.pathname === '/' || location.pa
       <Flex
         align="center"
      justify='space-around'
+     columnGap={['0px', '0px', '280px']}
         flexDirection={['column', 'column', 'row']}
 
-        rowGap={['20px',  '0px']}
-        height={['160px', '150px', '90px']}
+        rowGap={['0px',  '0px']}
+        height={['200px', '150px', '90px']}
         bgGradient={
           colorMode === 'light'
             ? 'linear(0deg, rgb(132, 110, 234) 10%, rgba(53, 34, 186, 0.64)80%)'
@@ -297,23 +298,10 @@ min-height= '100%'
               Wishlist
             </Text>
           </Link>
-          <Link className="links" to="/login">
-            <Box
-              as={CgLogIn}
-              boxSize={{ base: '25px', md: '30px', lg: '35px' }}
-              color={colorMode === 'light' ? 'black' : 'white'}
-              alt="Login"
-              margin="auto"
-            />
-            <Text
-              className="icon-text"
-              fontWeight="bold"
-              fontSize={['0.5em', '0.75em', '1em']}
-            >
-              Log in
-            </Text>
-          </Link>
-          <Button className="links" position="relative" onClick={onCartOpen}
+
+          <Button  position="relative" onClick={onCartOpen}
+          background='none'
+          _hover={{background:'none'}}
           >
             <Box
               as={TiShoppingCart}
@@ -323,7 +311,7 @@ min-height= '100%'
               margin="auto"
 
             />
-            <Badge fontSize='1xl' position='absolute' top='110%'>{cart.total_items}</Badge>
+            <Badge fontSize='1xl' position='absolute' top={['-50%','110%']}>{cart.total_items}</Badge>
           </Button>
           <Drawer
             isOpen={isCartOpen}

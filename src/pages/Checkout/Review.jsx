@@ -7,11 +7,11 @@ const Review = ({checkoutToken,ApplyCode}) => {
 
     const [discountIds,setdiscountIds]=useState([])
     useEffect(()=>{
-        console.log("hello")
+
         if(checkoutToken.discount.product_ids && checkoutToken.discount.product_ids.length>0){
 
         setdiscountIds(()=>checkoutToken.discount.product_ids)
-        console.log(discountIds)
+       
         }
 
     },[checkoutToken])

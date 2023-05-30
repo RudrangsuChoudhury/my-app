@@ -10,7 +10,7 @@ function CustomClearRefinements({handleSliderReset}) {
   };
 
   return (
-    <Button onClick={handleClearFilters} disabled={!canRefine} colorScheme="blue">
+    <Button width={['400px','100%']} onClick={handleClearFilters} disabled={!canRefine} colorScheme="blue">
       Clear Filters
     </Button>
   );

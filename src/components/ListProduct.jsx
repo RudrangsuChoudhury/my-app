@@ -12,6 +12,7 @@ import {
   useColorMode,
 
   Flex,
+  useMediaQuery
 } from '@chakra-ui/react';
 import { RangeInput } from 'react-instantsearch-hooks-web';
 import CustomRangeInput from './customcomponent/RangeInput';
@@ -34,8 +35,12 @@ const transformItems = (items, { results }) => {
 };
 
 const ListProduct = () => {
+
+
+  const [isSmallerThan500] = useMediaQuery('(max-width: 500px)');
   const sort=useSelector(state=>state.sort)
-  const colorMode = useColorMode();
+  const {colorMode} = useColorMode();
+
 
  const [sliderValue, setSliderValue] = React.useState([100,150000]); // initial slider value
 
@@ -43,29 +48,27 @@ const ListProduct = () => {
     setSliderValue([100, 150000]);
   // reset the slider value
   }
+  const searchboxWidth=isSmallerThan500?'400px':'100%'
 
 
 
 
   return (
- <InstantSearch searchClient={searchClient} indexName={`${sort}`}
-
-
-
->
+ <InstantSearch searchClient={searchClient} indexName={`${sort}`}>
 
     <Flex direction='column' rowGap='10px' >
- <SearchBox placeholder="Search for products, brands,color "/>
+ <SearchBox style={{width:searchboxWidth}} placeholder="Search for products, brands,color "/>
  <CustomClearRefinements handleSliderReset={handleSliderReset}/>
- <Flex columnGap={5} maxW='100%'>
+ <Flex columnGap={[0,5]} maxW='100%'>
      <Flex
-            bg={colorMode === 'light' ? 'white' : '#5E565E'}
+          bg={colorMode === 'light' ? '#3A7D97' : '#5E565E'}
             p={[1, 10]}
-            width={[100, 320]}
+            width={[180, 320]}
             borderRadius="10px"
             padding="10px 15px"
             direction={'column'}
             rowGap="10px"
+            mr={['10px',0]}
           >
             <Text
               fontSize={['8px', '16px']}
@@ -75,7 +78,9 @@ const ListProduct = () => {
             >
               Shop by Categories
             </Text>
-                    <RefinementList attribute="categories.name"
+                    <RefinementList
+                    style={{display:'flex'}}
+                   attribute="categories.name"
 
 
   translations={{
@@ -89,16 +94,15 @@ const ListProduct = () => {
           <Flex
             p={[1, 5]}
             width={[100, 320]}
-            bg={colorMode === 'light' ? 'white' : '#5E565E'}
+          bg={colorMode === 'light' ? '#3A7D97' : '#5E565E'}
             borderRadius="10px"
             padding="10px 15px"
             direction="column"
             rowGap={[1, 5]}
+            mr={['10px',0]}
           >
-            <Flex align='center' justify='space-between'>
 
 
-            </Flex>
 
 
 
@@ -132,7 +136,7 @@ const ListProduct = () => {
             <Flex
             p={[1, 5]}
             width={[100, 320]}
-            bg={colorMode === 'light' ? 'white' : '#5E565E'}
+            bg={colorMode === 'light' ? '#3A7D97' : '#5E565E'}
             borderRadius="10px"
             padding="10px 15px"
             direction="column"

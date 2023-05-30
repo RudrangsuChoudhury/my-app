@@ -22,7 +22,7 @@ import { Highlight } from 'react-instantsearch-hooks-web';
 
 const AnimatedBox = animated(Box);
 const ProductCard = ({hit}) => {
- 
+
 
   //handle cart
   const [isAddingToCart, setIsAddingToCart] = useState(false);
@@ -65,6 +65,13 @@ const ProductCard = ({hit}) => {
     try {
       await dispatch(addToCart(hit.id, 1));
       setCurrentQuantity(currentQuantity + 1);
+       toast({
+      title: 'Added to cart',
+      description: `You have successfully added this product to cart`,
+      status: 'success',
+      duration: 1000,
+      isClosable: true,
+    });
     } catch (error) {
       console.log(error);
     }
@@ -87,6 +94,14 @@ const compare=useSelector(state=>state.compare)
     return;
   }
     await dispatch(addToCompare(hit.id))
+      toast({
+      title: 'Added to comparing',
+      description: `You have successfully add this product to comparing page`,
+      status: 'success',
+      duration: 1000,
+      isClosable: true,
+    });
+
 
  }
 
@@ -104,6 +119,13 @@ const wishlist=useSelector(state=>state.wishlist)
     return;
   }
     await dispatch(addToWishlist(hit.id))
+     toast({
+      title: 'Added to wishlist',
+      description: `You have successfully wishlisted this product`,
+      status: 'success',
+      duration: 1000,
+      isClosable: true,
+    });
 
 }
 
@@ -138,7 +160,7 @@ const wishlist=useSelector(state=>state.wishlist)
     iconRight = '25px';
   }
   else{
-    iconRight='5px'
+    iconRight='10px'
   }
   //icons top position
   let iconTop;

@@ -49,51 +49,7 @@ export const fetchProducts = () => async (dispatch, getState) => {
   }
 };
 
-// export const addToCompare = (productId) => async (dispatch, getState) => {
 
-//   const url = new URL(
-//     `https://api.chec.io/v1/products/${productId}`
-// );
-
-// const headers = {
-//     "X-Authorization": "sk_50715b4ad7edd0ba4cf7f56d39b25c1d4450aba76925a",
-//     "Accept": "application/json",
-//     "Content-Type": "application/json",
-// };
-
-//  const response = await fetch(url, {
-//         method: "PUT",
-//         headers: headers,
-//         body: JSON.stringify({
-//     "attributes": [
-//       {
-//         "id": "attr_mOVKl4DMYlprRP",
-//         "value": "1"
-//       }
-//     ]
-//   })
-
-//     });
-
-//     // const data = await response.json();
-//     // dispatch(setCompare(data))
-
-//       const updatedProductData = await response.json();
-
-//   // Update the products array with the updated product data
-//   const products = getState().products.products;
-//   const updatedProducts = products.map(product => {
-//     if (product.id === updatedProductData.id) {
-//       return updatedProductData;
-//     } else {
-//       return product;
-//     }
-//   });
-
-//   dispatch(setCompare(updatedProductData));
-//   dispatch(setProducts(updatedProducts));
-
-// };
 
 
 

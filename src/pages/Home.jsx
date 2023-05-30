@@ -175,13 +175,13 @@ async function fetchDiscountData() {
             src={mac}
             h={{ base: '200px', md: '300px' }}
             w={{ base: '150px', md: '350px' }}
-            py={{ base: '5px', md: '1px' }}
+            p={{ base: '0px', md: '1px' }}
             textbgGradient={'linear(to-r, #5AC8B1,#8183D2)'}
             top={{ base: '5%', md: '25px' }}
             left={{ base: '24%', md: '24%' }}
-            buttontop={'43%'}
+            buttontop={['42%','43%']}
             buttonleft={'18%'}
-            fontSize={['10px', '20px']}
+            fontSize={['8px', '20px']}
             subheadfontsize={'10px'}
             subheadtop={'40%'}
             subheadleft={'24%'}
@@ -205,13 +205,13 @@ async function fetchDiscountData() {
             src={catbanner1}
             h={{ base: '200px', md: '300px' }}
             w={{ base: '150px', md: '350px' }}
-            py="10px"
+            p="10px"
             textbgGradient={'linear(to-r, #C160BB,#4451CA)'}
-            top={{ base: '10%', md: '10px' }}
+            top={{ base: '1%', md: '10px' }}
             left={'75%'}
             buttontop={['35%', '46%']}
             buttonleft={'72%'}
-            fontSize={['15px', '17px']}
+            fontSize={['8px', '17px']}
             subheadfontsize={'12px'}
             subheadtop={'45%'}
             subheadleft={'76%'}
@@ -235,7 +235,7 @@ async function fetchDiscountData() {
             src={catbanner2}
             h={{ base: '200px', md: '260px' }}
             w={{ base: '150px', md: '350px' }}
-            py="1px"
+            p="1px"
             textbgGradient={'linear(to-r, #5BBC54,#CF77CD)'}
             top={'63%'}
             left={'15%'}
@@ -265,7 +265,7 @@ async function fetchDiscountData() {
             src={catbanner3}
             h={{ base: '200px', md: '260px' }}
             w={{ base: '150px', md: '350px' }}
-            py="1px"
+            p="1px"
             textbgGradient={'linear(to-r, #4A66C1,#3ECFC8)'}
             top={'62%'}
             left={'70%'}
@@ -307,7 +307,7 @@ async function fetchDiscountData() {
           columnGap={[0, 10]}
           mb={['10px', '40px']}
           justifyContent="center"
-          width="1200px"
+          width={['fit',"1200px"]}
           flexDirection={{ base: 'column', md: 'row' }}
           rowGap={{ base: '30px', md: '0px' }}
         >
@@ -461,7 +461,7 @@ async function fetchDiscountData() {
         >
           {/* Iterate through the categories and render each one */}
           {categories.map((category, index) => {
-         
+
             let borderBottom;
             let borderLeft;
             let borderRight;
