@@ -190,7 +190,9 @@ display={scrollDirection === "down" && (location.pathname === '/' || location.pa
               <Link>The Student's Marketplace</Link>
             </Text>
             <Text
-              fontSize={['0.7em','0.7em',"1xl"]}
+                fontSize={['0.7em', '0.7em', "1xl"]}
+               
+
 
               fontWeight={700}
               bgClip="text"
