@@ -55,7 +55,7 @@ const BlogCard = ({title,description,date}) => {
           <Button size={['sm', 'lg']} colorScheme="teal" borderRadius={20} >
             Read More
           </Button>
-        </Link>
+        </Link>4
       </Box>
     </Box>
   );
