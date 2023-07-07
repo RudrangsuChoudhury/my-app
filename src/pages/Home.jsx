@@ -1,6 +1,5 @@
 import React from 'react';
 import { useState, useEffect, useRef } from 'react';
-
 import { Box, Grid, Text, Image, Flex, useColorMode } from '@chakra-ui/react';
 import Banner from '../components/Banner';
 import { BsTruck, BsGift, BsCreditCard } from 'react-icons/bs';
@@ -26,9 +25,7 @@ import brand2 from '../images/brand-02.png';
 import brand3 from '../images/brand-03.png';
 import brand4 from '../images/brand-04.png';
 import brand5 from '../images/brand-05.png';
-
 import brand6 from '../images/brand-06.png';
-
 import Famous1 from '../images/smartwatch_famous.jpg';
 import Famous2 from '../images/smartwatch_famous_dark.jpg';
 import Famous3 from '../images/FamousLaptop.jpg';
@@ -40,26 +37,14 @@ import { fetchProducts } from '../reducers/productsSlice';
 import { fetchCart, addToCart } from '../reducers/cartSlice';
 import { Link, json } from 'react-router-dom';
 import blog from '../components/customcomponent/blogarray';
-
-
-
-
-
-
 const Home = () => {
   const { colorMode, toggleColorMode } = useColorMode();
   const dispatch = useDispatch();
-
   const products = useSelector((state) => state.products.products);
-
-
-
   const [discountData, setDiscountData] = useState({})
   const url = new URL(
     "https://api.chec.io/v1/discounts/code_yA6nldmNZLwEWb"
   );
-
-
   const arr = useRef([]);
   if (arr.current.length === 0) {
     while (arr.current.length < 4) {
@@ -69,52 +54,28 @@ const Home = () => {
       }
     }
   }
-
-
-
-
-
-
   const headers = {
     "X-Authorization": "sk_50715b4ad7edd0ba4cf7f56d39b25c1d4450aba76925a",
     "Accept": "application/json",
     "Content-Type": "application/json",
   };
-
-
-
   async function fetchDiscountData() {
     const response = await fetch(url, {
       method: "GET",
       headers: headers,
     });
     const data = await response.json();
-
     setDiscountData(data)
-
   }
-
-
-
   useEffect(() => {
     dispatch(fetchProducts());
-
     dispatch(fetchCart());
     fetchDiscountData()
   }, []);
-
-
-
-
-
   //handle add to cart
-
-
-
   return (
     <>
       <Box>
-
         <Box
           background={
             colorMode === 'light'
@@ -461,7 +422,6 @@ const Home = () => {
           >
             {/* Iterate through the categories and render each one */}
             {categories.map((category, index) => {
-
               let borderBottom;
               let borderLeft;
               let borderRight;
@@ -553,7 +513,6 @@ const Home = () => {
                 brand={products[arr.current[0]].name.split(" ")[0].toUpperCase()}
                 price={products[arr.current[0]].price.formatted_with_symbol}
                 link={products[arr.current[0]].id}
-
               />
               <FeaturedProductCard image={products[arr.current[1]].image.url}
                 image1={products[arr.current[1]].assets[1].url}
@@ -613,7 +572,6 @@ const Home = () => {
                 left={['30%', '15%']}
                 rowGap={2}
                 fontSize="15px"
-
               />
               <FamousProduct
                 src={products[1].image.url}
@@ -711,7 +669,6 @@ const Home = () => {
             )}
           </Box>
         </Flex>
-
         <Box
           bgColor={colorMode === 'light' ? 'gray.300' : '#9661ae'}
           pt={20}
@@ -732,9 +689,7 @@ const Home = () => {
                 <Image src={brand3} boxSize={['40px', '150px']} />
                 <Image src={brand4} boxSize={['40px', '150px']} />
                 <Image src={brand5} boxSize={['40px', '150px']} />
-
                 <Image src={brand6} boxSize={['40px', '150px']} />
-
               </Box>
             </Marquee>
           </Box>
@@ -770,7 +725,6 @@ const Home = () => {
             mr={['50px', '0px']}
             mb={['50px', '0px']}
           >
-
             {blog.length > 0 && blog.map((blog) => (
               <BlogCard title={blog.title} key={blog.id} description={blog.description} date={blog.date} />
             ))}
